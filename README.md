@@ -6,7 +6,7 @@ ESD "Micro Mini" Project
     checking existence of said record~~ TRIM YOUR INPUTS
 
 ## Todo  
-- add foreign keys
-- implement custom exceptions
-- check department capacity before inserting employee
-- add system to store and manage employee photos
+- [done] add foreign keys
+- ~~implement custom exceptions~~ used alternative :)
+- [done] check department capacity before inserting employee
+- [done] add system to store and manage employee photos
