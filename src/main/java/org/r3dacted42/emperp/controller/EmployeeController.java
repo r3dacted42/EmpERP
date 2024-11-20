@@ -25,14 +25,14 @@ public class EmployeeController {
 
     @GetMapping("/{employeeId}")
     public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable String employeeId) {
-        EmployeeResponse res = employeeService.getEmployeeByEmployeeId(employeeId);
+        EmployeeResponse res = employeeService.getEmployeeByEmployeeId(employeeId.trim());
         if (res == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(res);
     }
 
     @GetMapping("/available")
     public ResponseEntity<Boolean> checkIfEmployeeIdAvailable(@RequestParam(value = "id") String employeeId) {
-        return ResponseEntity.ok(employeeService.checkIfEmployeeIdAvailable(employeeId));
+        return ResponseEntity.ok(employeeService.checkIfEmployeeIdAvailable(employeeId.trim()));
     }
 
     @PostMapping
@@ -47,9 +47,14 @@ public class EmployeeController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<EmployeeResponse> updateEmployee(@PathVariable Long id, @RequestBody @Valid EmployeeRequest employeeRequest) {
-        EmployeeResponse res = employeeService.updateEmployee(id, employeeRequest);
-        if (res == null) return ResponseEntity.badRequest().build(); // emp not found or emp_id taken
+    public ResponseEntity<Object> updateEmployee(@PathVariable Long id, @RequestBody @Valid EmployeeRequest employeeRequest) {
+        Object res = employeeService.updateEmployee(id, employeeRequest);
+        if (res.getClass() == String.class) {
+            // employee not found
+            if (((String) res).contains("exist")) return ResponseEntity.notFound().build();
+            // employee id already taken
+            return ResponseEntity.badRequest().body(res);
+        }
         return ResponseEntity.ok(res);
     }
 

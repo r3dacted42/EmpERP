@@ -20,6 +20,7 @@ public class EmployeeMapper {
     }
     public EmployeeResponse toResponse(final Employee entity) {
         return new EmployeeResponse(
+                entity.getId(),
                 entity.getEmployeeId(),
                 entity.getFirstName(),
                 entity.getLastName(),

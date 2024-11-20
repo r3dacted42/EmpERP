@@ -9,6 +9,7 @@ import org.r3dacted42.emperp.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -37,12 +38,18 @@ public class EmployeeService {
     }
 
     public EmployeeResponse getEmployeeByEmployeeId(String employeeId) {
-        return employeeMapper.toResponse(employeeRepository.findByEmployeeId(employeeId));
+        System.out.println("fetching " + employeeId);
+        return employeeRepository.findByEmployeeId(employeeId).map(employeeMapper::toResponse).orElse(null);
     }
 
-    public EmployeeResponse updateEmployee(long id, EmployeeRequest request) {
-        if (!employeeRepository.existsById(id) || !employeeRepository.existsByEmployeeId(request.employeeId())) {
-            return null;
+    public Object updateEmployee(long id, EmployeeRequest request) {
+        if (!employeeRepository.existsById(id)) {
+            return "employee does not exist";
+        }
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        if (employee != null && !Objects.equals(employee.getEmployeeId(), request.employeeId())
+                && employeeRepository.existsByEmployeeId(request.employeeId())) {
+            return "employee id taken";
         }
         Employee updatedEmployee = employeeMapper.toEntity(request);
         updatedEmployee.setId(id);
