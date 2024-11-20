@@ -31,6 +31,7 @@ public class Employee {
     @Column(name = "photograph_path", length = 1024)
     private String photographPath;
 
-    @Column(name = "department_id", nullable = false)
-    private Long departmentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
 }

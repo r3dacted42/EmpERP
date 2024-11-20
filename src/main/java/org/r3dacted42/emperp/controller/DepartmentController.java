@@ -27,7 +27,7 @@ public class DepartmentController {
     public ResponseEntity<DepartmentResponse> getDepartmentById(@PathVariable("departmentId") Long departmentId) {
         DepartmentResponse res = departmentService.getDepartment(departmentId);
         if (res == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(departmentService.getDepartment(departmentId));
+        return ResponseEntity.ok(res);
     }
 
     @PostMapping

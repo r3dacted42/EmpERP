@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 public class EmployeeSalaryMapper {
     public EmployeeSalary toEntity(final EmployeeSalaryRequest request) {
         return EmployeeSalary.builder()
-                .employeeId(request.employeeId())
                 .paymentDate(request.paymentDate())
                 .amount(request.amount())
                 .description(request.description())
@@ -18,7 +17,7 @@ public class EmployeeSalaryMapper {
     public EmployeeSalaryResponse toResponse(final EmployeeSalary entity) {
         return new EmployeeSalaryResponse(
                 entity.getId(),
-                entity.getEmployeeId(),
+                entity.getEmployee().getId(),
                 entity.getPaymentDate(),
                 entity.getAmount(),
                 entity.getDescription()

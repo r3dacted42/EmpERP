@@ -3,6 +3,7 @@ package org.r3dacted42.emperp.service;
 import lombok.RequiredArgsConstructor;
 import org.r3dacted42.emperp.dto.EmployeeSalaryRequest;
 import org.r3dacted42.emperp.dto.EmployeeSalaryResponse;
+import org.r3dacted42.emperp.entity.Employee;
 import org.r3dacted42.emperp.entity.EmployeeSalary;
 import org.r3dacted42.emperp.mapper.EmployeeSalaryMapper;
 import org.r3dacted42.emperp.repository.EmployeeRepository;
@@ -18,8 +19,13 @@ public class EmployeeSalaryService {
     private final EmployeeSalaryMapper employeeSalaryMapper;
     private final EmployeeRepository employeeRepository;
 
-    public EmployeeSalaryResponse createEmployeeSalary(EmployeeSalaryRequest request) {
+    public Object createEmployeeSalary(EmployeeSalaryRequest request) {
         EmployeeSalary employeeSalary = employeeSalaryMapper.toEntity(request);
+        Employee employee = employeeRepository.findById(request.employeeId()).orElse(null);
+        if (employee == null) {
+            return "employee not found";
+        }
+        employeeSalary.setEmployee(employee);
         return employeeSalaryMapper.toResponse(employeeSalaryRepository.save(employeeSalary));
     }
 

@@ -16,8 +16,9 @@ public class EmployeeSalary {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "employee_id", nullable = false)
-    private Long employeeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(referencedColumnName = "id", name = "employee_id", nullable = false)
+    private Employee employee;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "payment_date", nullable = false)

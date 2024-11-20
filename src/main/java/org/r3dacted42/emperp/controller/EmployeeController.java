@@ -36,12 +36,13 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeResponse> createEmployee(@RequestBody @Valid EmployeeRequest employeeRequest) {
-        EmployeeResponse res = employeeService.createEmployee(employeeRequest);
-        if (res == null) return ResponseEntity.badRequest().build();
+    public ResponseEntity<Object> createEmployee(@RequestBody @Valid EmployeeRequest employeeRequest) {
+        Object res = employeeService.createEmployee(employeeRequest);
+        // department not found or employee id already taken
+        if (res.getClass() == String.class) return ResponseEntity.badRequest().body(res);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{employeeId}")
-                .buildAndExpand(res.employeeId())
+                .buildAndExpand(((EmployeeResponse) res).employeeId())
                 .toUri();
         return ResponseEntity.created(location).body(res);
     }
@@ -49,12 +50,9 @@ public class EmployeeController {
     @PatchMapping("/{id}")
     public ResponseEntity<Object> updateEmployee(@PathVariable Long id, @RequestBody @Valid EmployeeRequest employeeRequest) {
         Object res = employeeService.updateEmployee(id, employeeRequest);
-        if (res.getClass() == String.class) {
-            // employee not found
-            if (((String) res).contains("exist")) return ResponseEntity.notFound().build();
-            // employee id already taken
-            return ResponseEntity.badRequest().body(res);
-        }
+        if (res == null) return ResponseEntity.notFound().build();
+        // employee id already taken
+        if (res.getClass() == String.class) return ResponseEntity.badRequest().body(res);
         return ResponseEntity.ok(res);
     }
 
