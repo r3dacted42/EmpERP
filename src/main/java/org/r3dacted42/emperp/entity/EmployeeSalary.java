@@ -3,7 +3,7 @@ package org.r3dacted42.emperp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @Builder

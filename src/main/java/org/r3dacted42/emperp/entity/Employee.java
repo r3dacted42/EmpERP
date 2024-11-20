@@ -24,10 +24,9 @@ public class Employee {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
     private String title;
 
-    @Column(name = "photograph_path")
+    @Column(name = "photograph_path", length = 1024)
     private String photographPath;
 
     @Column(name = "department_id", nullable = false)
