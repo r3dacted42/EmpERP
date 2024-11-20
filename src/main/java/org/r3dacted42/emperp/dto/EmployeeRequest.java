@@ -27,10 +27,6 @@ public record EmployeeRequest(
         @Size(max = 255, message = "title must be at most 255 chars long")
         String title,
 
-        @JsonProperty("photograph_path")
-        @Size(max = 1024, message = "photograph path must be at most 1024 chars long")
-        String photographPath,
-
         @JsonProperty("department_id")
         @NotNull(message = "department id is required")
         Long departmentId

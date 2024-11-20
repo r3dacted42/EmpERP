@@ -14,7 +14,6 @@ public class EmployeeMapper {
                 .lastName(request.lastName())
                 .email(request.email())
                 .title(request.title())
-                .photographPath(request.photographPath())
                 .build();
     }
     public EmployeeResponse toResponse(final Employee entity) {
@@ -25,7 +24,6 @@ public class EmployeeMapper {
                 entity.getLastName(),
                 entity.getEmail(),
                 entity.getTitle(),
-                entity.getPhotographPath(),
                 entity.getDepartment().getDepartmentId(),
                 entity.getDepartment().getName()
         );

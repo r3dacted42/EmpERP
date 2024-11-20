@@ -15,8 +15,6 @@ public record EmployeeResponse(
         String email,
         @JsonProperty("title")
         String title,
-        @JsonProperty("photograph_path")
-        String photographPath,
         @JsonProperty("department_id")
         Long departmentId,
         @JsonProperty("department_name")
