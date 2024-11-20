@@ -12,8 +12,10 @@ import lombok.*;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "employee_id")
-    private Long employeeId;
+    private Long id;
+
+    @Column(name = "employee_id", unique = true, nullable = false)
+    private String employeeId;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -21,7 +23,7 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     private String title;

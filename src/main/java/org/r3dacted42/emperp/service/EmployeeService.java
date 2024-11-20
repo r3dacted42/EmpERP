@@ -16,13 +16,16 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
 
-    public String createEmployee(EmployeeRequest request) {
-        if (request.employeeId() != null && employeeRepository.existsById(request.employeeId())) {
-            return "employee with id already exists";
+    public boolean checkIfEmployeeIdAvailable(String employeeId) {
+        return employeeRepository.existsByEmployeeId(employeeId);
+    }
+
+    public EmployeeResponse createEmployee(EmployeeRequest request) {
+        if (employeeRepository.existsByEmployeeId(request.employeeId())) {
+            return null;
         }
         Employee employee = employeeMapper.toEntity(request);
-        employeeRepository.save(employee);
-        return "employee created";
+        return employeeMapper.toResponse(employeeRepository.save(employee));
     }
 
     public List<EmployeeResponse> getAllEmployees() {
@@ -33,19 +36,19 @@ public class EmployeeService {
         return employeeRepository.findById(employeeId).map(employeeMapper::toResponse).orElse(null);
     }
 
-    public String updateEmployee(long employeeId, EmployeeRequest request) {
-        if (!employeeRepository.existsById(employeeId)) {
-            return "employee not found";
-        }
-        if (request.employeeId() != null && employeeRepository.existsById(request.employeeId())) {
-            return "employee with new id already exists";
+    public EmployeeResponse updateEmployee(long id, EmployeeRequest request) {
+        if (!employeeRepository.existsById(id)) {
+            return null;
         }
         Employee updatedEmployee = employeeMapper.toEntity(request);
-        employeeRepository.updateEmployeeByEmployeeId(employeeId, updatedEmployee);
-        return "employee updated";
+        updatedEmployee.setId(id);
+        return employeeMapper.toResponse(employeeRepository.save(updatedEmployee));
     }
 
     public String deleteEmployee(long employeeId) {
+        if (!employeeRepository.existsById(employeeId)) {
+            return null;
+        }
         employeeRepository.deleteById(employeeId);
         return "employee deleted";
     }

@@ -1,13 +1,13 @@
 package org.r3dacted42.emperp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.*;
 
 public record EmployeeRequest(
         @JsonProperty("employee_id")
-        @Nullable
-        Long employeeId,
+        @NotEmpty(message = "employee id is required")
+        @Size(min = 1, max = 255, message = "employee id must be 1 to 255 chars long")
+        String employeeId,
 
         @JsonProperty("first_name")
         @NotEmpty(message = "first name is required")

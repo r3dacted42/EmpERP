@@ -18,13 +18,9 @@ public class EmployeeSalaryService {
     private final EmployeeSalaryMapper employeeSalaryMapper;
     private final EmployeeRepository employeeRepository;
 
-    public String createEmployeeSalary(EmployeeSalaryRequest request) {
-        if (request.id() != null && employeeSalaryRepository.existsById(request.id())) {
-            return "employee salary with is already exists";
-        }
+    public EmployeeSalaryResponse createEmployeeSalary(EmployeeSalaryRequest request) {
         EmployeeSalary employeeSalary = employeeSalaryMapper.toEntity(request);
-        employeeSalaryRepository.save(employeeSalary);
-        return "employee salary created";
+        return employeeSalaryMapper.toResponse(employeeSalaryRepository.save(employeeSalary));
     }
 
     public List<EmployeeSalaryResponse> getAllEmployeeSalaries() {
@@ -35,19 +31,19 @@ public class EmployeeSalaryService {
         return employeeSalaryRepository.findById(id).map(employeeSalaryMapper::toResponse).orElse(null);
     }
 
-    public String updateEmployeeSalary(Long id, EmployeeSalaryRequest request) {
+    public EmployeeSalaryResponse updateEmployeeSalary(Long id, EmployeeSalaryRequest request) {
         if (!employeeSalaryRepository.existsById(id)) {
-            return "employee salary not found";
-        }
-        if (request.id() != null && employeeSalaryRepository.existsById(request.id())) {
-            return "employee salary with new id already exists";
+            return null;
         }
         EmployeeSalary updatedSalary = employeeSalaryMapper.toEntity(request);
-        employeeSalaryRepository.updateEmployeeSalaryById(id, updatedSalary);
-        return "employee salary updated";
+        updatedSalary.setId(id);
+        return employeeSalaryMapper.toResponse(employeeSalaryRepository.save(updatedSalary));
     }
 
     public String deleteEmployeeSalary(Long id) {
+        if (!employeeSalaryRepository.existsById(id)) {
+            return null;
+        }
         employeeRepository.deleteById(id);
         return "employee salary deleted";
     }

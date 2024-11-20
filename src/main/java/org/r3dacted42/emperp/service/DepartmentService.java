@@ -16,13 +16,9 @@ public class DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final DepartmentMapper departmentMapper;
 
-    public String createDepartment(DepartmentRequest request) {
-        if (request.departmentId() != null && departmentRepository.existsById(request.departmentId())) {
-            return "department with id already exists";
-        }
+    public DepartmentResponse createDepartment(DepartmentRequest request) {
         Department department = departmentMapper.toEntity(request);
-        departmentRepository.save(department);
-        return "department created";
+        return departmentMapper.toResponse(departmentRepository.save(department));
     }
 
     public List<DepartmentResponse> getAllDepartments() {
@@ -33,19 +29,19 @@ public class DepartmentService {
         return departmentRepository.findById(departmentId).map(departmentMapper::toResponse).orElse(null);
     }
 
-    public String updateDepartment(Long departmentId, DepartmentRequest request) {
+    public DepartmentResponse updateDepartment(Long departmentId, DepartmentRequest request) {
         if (!departmentRepository.existsById(departmentId)) {
-            return "department not found";
-        }
-        if (request.departmentId() != null && departmentRepository.existsById(request.departmentId())) {
-            return "department with new id already exists";
+            return null;
         }
         Department updatedDepartment = departmentMapper.toEntity(request);
-        departmentRepository.updateDepartmentByDepartmentId(departmentId, updatedDepartment);
-        return "department updated";
+        updatedDepartment.setDepartmentId(departmentId);
+        return departmentMapper.toResponse(departmentRepository.save(updatedDepartment));
     }
 
     public String deleteDepartment(Long departmentId) {
+        if (!departmentRepository.existsById(departmentId)) {
+            return null;
+        }
         departmentRepository.deleteById(departmentId);
         return "department deleted";
     }

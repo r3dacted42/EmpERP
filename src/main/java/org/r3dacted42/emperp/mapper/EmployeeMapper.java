@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 public class EmployeeMapper {
     public Employee toEntity(final EmployeeRequest request) {
         return Employee.builder()
+                .employeeId(request.employeeId())
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .email(request.email())
