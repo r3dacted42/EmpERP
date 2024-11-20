@@ -17,7 +17,7 @@ public class EmployeeService {
     private final EmployeeMapper employeeMapper;
 
     public boolean checkIfEmployeeIdAvailable(String employeeId) {
-        return employeeRepository.existsByEmployeeId(employeeId);
+        return !employeeRepository.existsByEmployeeId(employeeId);
     }
 
     public EmployeeResponse createEmployee(EmployeeRequest request) {
@@ -32,12 +32,16 @@ public class EmployeeService {
         return employeeRepository.findAll().stream().map(employeeMapper::toResponse).toList();
     }
 
-    public EmployeeResponse getEmployeeById(long employeeId) {
-        return employeeRepository.findById(employeeId).map(employeeMapper::toResponse).orElse(null);
+    public EmployeeResponse getEmployeeById(long id) {
+        return employeeRepository.findById(id).map(employeeMapper::toResponse).orElse(null);
+    }
+
+    public EmployeeResponse getEmployeeByEmployeeId(String employeeId) {
+        return employeeMapper.toResponse(employeeRepository.findByEmployeeId(employeeId));
     }
 
     public EmployeeResponse updateEmployee(long id, EmployeeRequest request) {
-        if (!employeeRepository.existsById(id)) {
+        if (!employeeRepository.existsById(id) || !employeeRepository.existsByEmployeeId(request.employeeId())) {
             return null;
         }
         Employee updatedEmployee = employeeMapper.toEntity(request);

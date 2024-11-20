@@ -27,7 +27,7 @@ public class EmployeeSalaryService {
         return employeeSalaryRepository.findAll().stream().map(employeeSalaryMapper::toResponse).toList();
     }
 
-    public EmployeeSalaryResponse getEmployeeSalaryById(Long id) {
+    public EmployeeSalaryResponse getEmployeeSalary(Long id) {
         return employeeSalaryRepository.findById(id).map(employeeSalaryMapper::toResponse).orElse(null);
     }
 

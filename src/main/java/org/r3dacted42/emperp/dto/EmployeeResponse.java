@@ -3,6 +3,8 @@ package org.r3dacted42.emperp.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record EmployeeResponse(
+        @JsonProperty("id")
+        Long id,
         @JsonProperty("employee_id")
         String employeeId,
         @JsonProperty("first_name")
