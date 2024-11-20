@@ -18,15 +18,19 @@ public class DepartmentService {
 
     public DepartmentResponse createDepartment(DepartmentRequest request) {
         Department department = departmentMapper.toEntity(request);
-        return departmentMapper.toResponse(departmentRepository.save(department));
+        return departmentMapper.toResponse(departmentRepository.save(department), 0L);
     }
 
     public List<DepartmentResponse> getAllDepartments() {
-        return departmentRepository.findAll().stream().map(departmentMapper::toResponse).toList();
+        return departmentRepository.findAll().stream().map((e) ->
+            departmentMapper.toResponse(e, departmentRepository.getEmployeeCount(e.getDepartmentId()))
+        ).toList();
     }
 
     public DepartmentResponse getDepartment(Long departmentId) {
-        return departmentRepository.findById(departmentId).map(departmentMapper::toResponse).orElse(null);
+        return departmentRepository.findById(departmentId).map((e) ->
+                departmentMapper.toResponse(e, departmentRepository.getEmployeeCount(e.getDepartmentId()))
+        ).orElse(null);
     }
 
     public DepartmentResponse updateDepartment(Long departmentId, DepartmentRequest request) {
@@ -35,7 +39,8 @@ public class DepartmentService {
         }
         Department updatedDepartment = departmentMapper.toEntity(request);
         updatedDepartment.setDepartmentId(departmentId);
-        return departmentMapper.toResponse(departmentRepository.save(updatedDepartment));
+        return departmentMapper.toResponse(departmentRepository.save(updatedDepartment),
+                departmentRepository.getEmployeeCount(updatedDepartment.getDepartmentId()));
     }
 
     public String deleteDepartment(Long departmentId) {

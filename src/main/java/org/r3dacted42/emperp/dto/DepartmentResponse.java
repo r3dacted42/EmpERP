@@ -8,6 +8,8 @@ public record DepartmentResponse(
         @JsonProperty("name")
         String name,
         @JsonProperty("capacity")
-        Long capacity
+        Long capacity,
+        @JsonProperty("strength")
+        Long strength
 ) {
 }

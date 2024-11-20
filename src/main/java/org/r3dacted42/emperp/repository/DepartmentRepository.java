@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
-    @Query("SELECT COUNT(e) FROM Department d, Employee e WHERE d.departmentId = e.department.departmentId")
+    @Query("SELECT COUNT(e) FROM Department d, Employee e WHERE d.departmentId = e.department.departmentId AND d.departmentId = :id")
     Long getEmployeeCount(@Param("id") Long departmentId);
 }

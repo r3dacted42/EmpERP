@@ -13,11 +13,12 @@ public class DepartmentMapper {
                 .capacity(request.capacity())
                 .build();
     }
-    public DepartmentResponse toResponse(Department entity) {
+    public DepartmentResponse toResponse(Department entity, Long strength) {
         return new DepartmentResponse(
                 entity.getDepartmentId(),
                 entity.getName(),
-                entity.getCapacity()
+                entity.getCapacity(),
+                strength
         );
     }
 }
