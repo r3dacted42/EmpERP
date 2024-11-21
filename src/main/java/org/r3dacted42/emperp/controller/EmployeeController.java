@@ -34,7 +34,7 @@ public class EmployeeController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/available")
+    @GetMapping("/id-available")
     public ResponseEntity<Boolean> checkIfEmployeeIdAvailable(@RequestParam(value = "id") String employeeId) {
         return ResponseEntity.ok(employeeService.checkIfEmployeeIdAvailable(employeeId.trim()));
     }
@@ -50,7 +50,7 @@ public class EmployeeController {
     public ResponseEntity<Object> createEmployee(@RequestBody @Valid EmployeeRequest employeeRequest) {
         Object res = employeeService.createEmployee(employeeRequest);
         // department not found or employee id already taken
-        if (res.getClass() == String.class) return ResponseEntity.badRequest().body(res);
+        if (res instanceof String) return ResponseEntity.badRequest().body(res);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{employeeId}")
                 .buildAndExpand(((EmployeeResponse) res).employeeId())
@@ -62,8 +62,8 @@ public class EmployeeController {
     public ResponseEntity<Object> updateEmployee(@PathVariable Long id, @RequestBody @Valid EmployeeRequest employeeRequest) {
         Object res = employeeService.updateEmployee(id, employeeRequest);
         if (res == null) return ResponseEntity.notFound().build();
-        // employee id already taken
-        if (res.getClass() == String.class) return ResponseEntity.badRequest().body(res);
+        // department not found or employee id already taken
+        if (res instanceof String) return ResponseEntity.badRequest().body(res);
         return ResponseEntity.ok(res);
     }
 

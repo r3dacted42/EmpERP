@@ -68,7 +68,7 @@ public class EmployeeService {
         return filePath;
     }
 
-    public Object updateEmployee(long id, EmployeeRequest request) {
+    public Object updateEmployee(Long id, EmployeeRequest request) {
         if (!employeeRepository.existsById(id)) {
             return null;
         }
@@ -77,8 +77,14 @@ public class EmployeeService {
                 && employeeRepository.existsByEmployeeId(request.employeeId())) {
             return "employee id taken";
         }
+        Department department = departmentRepository.findById(request.departmentId()).orElse(null);
+        if (department == null) {
+            return "department not found";
+        }
         Employee updatedEmployee = employeeMapper.toEntity(request);
         updatedEmployee.setId(id);
+        updatedEmployee.setDepartment(department);
+        updatedEmployee.setPhotographPath(Objects.requireNonNull(employee).getPhotographPath());
         return employeeMapper.toResponse(employeeRepository.save(updatedEmployee));
     }
 

@@ -34,7 +34,7 @@ public class EmployeeSalaryController {
     public ResponseEntity<Object> createEmployeeSalary(@RequestBody @Valid EmployeeSalaryRequest departmentRequest) {
         Object res = employeeSalaryService.createEmployeeSalary(departmentRequest);
         // employee not found
-        if (res.getClass() == String.class) return ResponseEntity.badRequest().body(res);
+        if (res instanceof String) return ResponseEntity.badRequest().body(res);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(((EmployeeSalaryResponse) res).id())
