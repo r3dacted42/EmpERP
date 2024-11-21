@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class DepartmentController {
     }
 
     @DeleteMapping("/{departmentId}")
-    public ResponseEntity<String> deleteDepartment(@PathVariable("departmentId") Long departmentId) {
+    public ResponseEntity<String> deleteDepartment(@PathVariable("departmentId") Long departmentId) throws IOException {
         String res = departmentService.deleteDepartment(departmentId);
         if (res == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(res);

@@ -13,6 +13,16 @@
 				{
 					"name": "Create Department",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -43,6 +53,16 @@
 				{
 					"name": "Get All Departments",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -64,6 +84,16 @@
 				{
 					"name": "Get Department",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -86,11 +116,21 @@
 				{
 					"name": "Update Department",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"test-dept-11\",\r\n    \"capacity\": \"656\"\r\n}",
+							"raw": "{\r\n    \"name\": \"test-dept-1\",\r\n    \"capacity\": \"1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -117,10 +157,20 @@
 				{
 					"name": "Delete Department",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/departments/1",
+							"raw": "http://localhost:8080/api/v1/departments/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -130,7 +180,7 @@
 								"api",
 								"v1",
 								"departments",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -145,6 +195,16 @@
 				{
 					"name": "Create Employee",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -175,10 +235,20 @@
 				{
 					"name": "Check EmpId Available",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/employees/available?id=r3dacted42",
+							"raw": "http://localhost:8080/api/v1/employees/id-available?id=r3dacted42",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -188,7 +258,7 @@
 								"api",
 								"v1",
 								"employees",
-								"available"
+								"id-available"
 							],
 							"query": [
 								{
@@ -203,6 +273,16 @@
 				{
 					"name": "Get All Employees",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -224,6 +304,16 @@
 				{
 					"name": "Get Employee",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -246,11 +336,21 @@
 				{
 					"name": "Update Employee",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"employee_id\": \"r3dacted42\",\r\n    \"first_name\": \"Priyansh\",\r\n    \"last_name\": \"Agrahari\",\r\n    \"email\": \"priyansh.agr4@gmail.com\",\r\n    \"title\": null,\r\n    \"photograph_path\": null,\r\n    \"department_id\": 2\r\n}",
+							"raw": "{\r\n    \"employee_id\": \"r3dacted42\",\r\n    \"first_name\": \"Priyansh\",\r\n    \"last_name\": \"Agrahari\",\r\n    \"email\": \"priyansh.agr4@gmail.com\",\r\n    \"title\": null,\r\n    \"photograph_path\": null,\r\n    \"department_id\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -277,6 +377,16 @@
 				{
 					"name": "Delete Employee",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -299,6 +409,16 @@
 				{
 					"name": "Update Photo",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
@@ -307,12 +427,12 @@
 								{
 									"key": "photo",
 									"type": "file",
-									"src": "/C:/Users/priya/Pictures/rdt/e/S__1851575.jpg"
+									"src": "/C:/Users/priya/Pictures/random shit/trippy.gif"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/employees/photo/1",
+							"raw": "http://localhost:8080/api/v1/employees/photo/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -323,7 +443,7 @@
 								"v1",
 								"employees",
 								"photo",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -332,6 +452,16 @@
 				{
 					"name": "Get Photo",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -361,6 +491,16 @@
 				{
 					"name": "Create Employee Salary",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -391,6 +531,16 @@
 				{
 					"name": "Get All Salaries",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -412,6 +562,16 @@
 				{
 					"name": "Get Employee Salary",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -434,6 +594,16 @@
 				{
 					"name": "Update Salary",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
@@ -465,6 +635,16 @@
 				{
 					"name": "Delete Salary",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -486,6 +666,107 @@
 				}
 			],
 			"description": "CRUD for employee salaries"
+		},
+		{
+			"name": "User Accounts",
+			"item": [
+				{
+					"name": "Username Available",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/username-available?username=r3dacted42",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"username-available"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "r3dacted42"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"r3dacted42\",\r\n    \"password\": \"easypass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"r3dacted42\",\r\n    \"password\": \"easypass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyM2RhY3RlZDQyIiwiaWF0IjoxNzMyMjEzMzA4LCJleHAiOjE3MzIyMTY5MDh9.h9N-sAoRSl-rbbxLTZRBiJd75pRkRiYMS2potVydx5E"
 		}
 	]
 }

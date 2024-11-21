@@ -1,20 +1,28 @@
 package org.r3dacted42.emperp.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.r3dacted42.emperp.controller.EmployeeController;
 import org.r3dacted42.emperp.dto.DepartmentRequest;
 import org.r3dacted42.emperp.dto.DepartmentResponse;
 import org.r3dacted42.emperp.entity.Department;
+import org.r3dacted42.emperp.entity.Employee;
 import org.r3dacted42.emperp.mapper.DepartmentMapper;
 import org.r3dacted42.emperp.repository.DepartmentRepository;
+import org.r3dacted42.emperp.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final DepartmentMapper departmentMapper;
+    private final EmployeeRepository employeeRepository;
+    private final EmployeeController employeeController;
 
     public DepartmentResponse createDepartment(DepartmentRequest request) {
         Department department = departmentMapper.toEntity(request);
@@ -43,9 +51,16 @@ public class DepartmentService {
                 departmentRepository.getEmployeeCount(updatedDepartment.getDepartmentId()));
     }
 
-    public String deleteDepartment(Long departmentId) {
+    public String deleteDepartment(Long departmentId) throws IOException {
         if (!departmentRepository.existsById(departmentId)) {
             return null;
+        }
+        if (departmentRepository.getEmployeeCount(departmentId) > 0) {
+            Department department = Objects.requireNonNull(departmentRepository.findById(departmentId).orElse(null));
+            List<Long> empIds = department.getEmployees().stream().map(Employee::getId).toList();
+            for (Long empId : empIds) {
+                employeeController.deleteEmployee(empId);
+            }
         }
         departmentRepository.deleteById(departmentId);
         return "department deleted";

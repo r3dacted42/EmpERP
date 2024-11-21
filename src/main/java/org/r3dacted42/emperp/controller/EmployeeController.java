@@ -2,6 +2,7 @@ package org.r3dacted42.emperp.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.misc.Pair;
 import org.r3dacted42.emperp.dto.EmployeeRequest;
 import org.r3dacted42.emperp.dto.EmployeeResponse;
 import org.r3dacted42.emperp.service.EmployeeService;
@@ -68,14 +69,14 @@ public class EmployeeController {
     }
 
     @PatchMapping("/photo/{id}")
-    public ResponseEntity<Object> updateEmployeePhoto(@PathVariable Long id, @RequestBody MultipartFile photo) throws IOException {
-        String res = employeeService.updateEmployeePhoto(id, photo);
-        if (res == null) return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok(res);
+    public ResponseEntity<String> updateEmployeePhoto(@PathVariable Long id, @RequestBody MultipartFile photo) throws IOException {
+        Pair<String, Boolean> res = employeeService.updateEmployeePhoto(id, photo);
+        if (!res.b) return ResponseEntity.badRequest().body(res.a);
+        return ResponseEntity.ok(res.a);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long id) throws IOException {
         String res = employeeService.deleteEmployee(id);
         if (res == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(res);

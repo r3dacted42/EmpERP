@@ -1,6 +1,7 @@
 package org.r3dacted42.emperp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.misc.Pair;
 import org.r3dacted42.emperp.dto.EmployeeRequest;
 import org.r3dacted42.emperp.dto.EmployeeResponse;
 import org.r3dacted42.emperp.entity.Department;
@@ -62,7 +63,7 @@ public class EmployeeService {
 
     public Path getEmployeePhotoPath(String employeeId) {
         Employee employee = employeeRepository.findByEmployeeId(employeeId).orElse(null);
-        if (employee == null) return null;
+        if (employee == null || employee.getPhotographPath() == null) return null;
         Path filePath = Paths.get(imageStoragePath, employee.getPhotographPath());
         if (!Files.exists(filePath)) return null;
         return filePath;
@@ -98,13 +99,12 @@ public class EmployeeService {
         return fileName;
     }
 
-    public String updateEmployeePhoto(Long id, MultipartFile photo) throws IOException {
+    public Pair<String, Boolean> updateEmployeePhoto(Long id, MultipartFile photo) throws IOException {
         if (!employeeRepository.existsById(id)) {
-            return null;
+            return new Pair<>("employee not found", false);
         }
         if (photo == null || photo.getOriginalFilename() == null) {
-            System.out.println("photo invalid");
-            return null;
+            return new Pair<>("invalid photo", false);
         }
         Employee employee = employeeRepository.findById(id).orElse(null);
         String currentFileName = Objects.requireNonNull(employee).getPhotographPath();
@@ -114,12 +114,17 @@ public class EmployeeService {
         }
         employee.setPhotographPath(savePhotoToDisk(photo));
         employeeRepository.save(employee);
-        return "employee photo updated";
+        return new Pair<>("photo updated", true);
     }
 
-    public String deleteEmployee(long employeeId) {
+    public String deleteEmployee(long employeeId) throws IOException {
         if (!employeeRepository.existsById(employeeId)) {
             return null;
+        }
+        Employee employee = Objects.requireNonNull(employeeRepository.findById(employeeId).orElse(null));
+        if (employee.getPhotographPath() != null) {
+            Path filePath = Paths.get(imageStoragePath, employee.getPhotographPath());
+            if (Files.exists(filePath)) Files.delete(filePath);
         }
         employeeRepository.deleteById(employeeId);
         return "employee deleted";
