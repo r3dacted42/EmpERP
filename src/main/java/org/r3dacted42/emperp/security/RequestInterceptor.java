@@ -16,7 +16,7 @@ public class RequestInterceptor implements HandlerInterceptor {
     private String frontendUrl;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // handle pre-flight requests
         if (request.getMethod().equals("OPTIONS")) {
             response.setHeader("Access-Control-Allow-Origin", frontendUrl);
