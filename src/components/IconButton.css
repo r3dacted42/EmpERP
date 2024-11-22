@@ -1,0 +1,26 @@
+.icon-button {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border: 1px solid gray;
+    border-radius: 9px;
+    overflow: hidden;
+
+    .icon {
+        position: absolute;
+        align-self: center;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        font-size: 1.3em;
+    }
+
+    button {
+        padding: 2px 16px;
+        border-radius: 8px;
+        border: 0px solid black;
+        width: 100%;
+    }
+}

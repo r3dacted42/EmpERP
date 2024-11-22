@@ -1,0 +1,32 @@
+.text-input {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border: 1px solid gray;
+    border-radius: 9px;
+    overflow: hidden;
+    margin: 8px 0;
+
+    .icon-start {
+        position: absolute;
+        left: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    input {
+        padding: 4px;
+        border-radius: 8px;
+        border: 0px solid black;
+        width: 100%;
+    }
+
+    .icon-end {
+        position: absolute;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

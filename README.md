@@ -3,4 +3,4 @@
 ESD "Micro Mini" Project
 
 ## Todo  
-- user login/register system
+- ~~user login/register system~~

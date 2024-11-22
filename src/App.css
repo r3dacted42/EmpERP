@@ -1,0 +1,61 @@
+* {
+    transition: all 150ms;
+    /* border: 1px solid red; */
+}
+
+body {
+    height: 100vh;
+    background-color: gainsboro;
+}
+
+#root {
+    height: 100%;
+}
+
+button {
+    padding: 2px 16px;
+    border: 1px solid gray;
+    border-radius: 8px;
+    background-color: gainsboro;
+}
+button.sm {
+    padding: 2px 4px;
+    font-size: small;
+}
+button:hover {
+    background-color: rgb(202, 202, 202);
+}
+
+h2 {
+    flex-grow: 1;
+    font-size: 2.5em;
+    text-align: end;
+    font-weight: bold;
+}
+
+.login-page {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    height: min-content;
+    width: 300px;
+    padding: 16px;
+    border: 0px solid black;
+    border-radius: 8px;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
