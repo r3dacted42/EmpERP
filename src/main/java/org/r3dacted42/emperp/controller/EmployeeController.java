@@ -40,7 +40,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.checkIfEmployeeIdAvailable(employeeId.trim()));
     }
 
-    @GetMapping("/photo/{employeeId}")
+    @GetMapping("/{employeeId}/photo")
     public ResponseEntity<byte[]> getEmployeePhoto(@PathVariable String employeeId) throws IOException {
         Path path = employeeService.getEmployeePhotoPath(employeeId.trim());
         if (path == null) return ResponseEntity.notFound().build();
