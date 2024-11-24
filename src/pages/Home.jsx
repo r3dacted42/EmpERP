@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useCookies } from 'react-cookie';
-import { useFetchAuth } from '../hooks/useFetchAuth';
-import Navbar from '../components/Navbar';
-import Modal from '../components/Modal';
-import IconButton from '../components/IconButton';
-import Employee from '../models/Employee';
+import useFetchAuth from '../hooks/useFetchAuth';
+import Navbar from '../components/general/Navbar';
+import Modal from '../components/general/Modal';
+import IconButton from '../components/general/IconButton';
+import EmployeeModel from '../models/EmployeeModel';
+import EmployeeCard from '../components/employee/EmployeeCard';
 
 function Home() {
     const navigate = useNavigate();
-    const [cookies, setCookies, removeCookies] = useCookies(['username', 'token']);
     const fetchAuth = useFetchAuth();
     const [loginModalVis, setLoginModalVis] = useState(false);
     const [employees, setEmployees] = useState([]);
@@ -24,10 +23,8 @@ function Home() {
                 if (res.status === 200) {
                     res.json()
                         .then((data) => {
-                            let _employees = data.map((d) => (new Employee(d)));
-                            setEmployees(_employees);
-                            const emps = document.getElementById('emps');
-                            emps.innerHTML = `<img src='${_employees[0].photo_url}'> <p>${_employees[0].fullName}</p>`;
+                            let emps = data.map((d) => (new EmployeeModel(d)));
+                            setEmployees(emps);
                         });
                 } else {
                     res.text()
@@ -40,14 +37,25 @@ function Home() {
 
     return (
         <div className='container'>
-            <h2>welcome @{cookies.username ?? "username"}</h2>
+            <h2>employees</h2>
             <Navbar />
-            <div id='emps'></div>
+
+            <span className='d-flex flex-direction-row justify-content-end gap-3 mb-3'>
+                <IconButton icon={'person_add'} title='add employee' />
+                <IconButton icon={'delete'} title='delete all' />
+            </span>
+
+            <div className='row row-cols-lg-2 row-cols-1 row-gap-3'>
+                {employees.map((e) =>
+                    <div key={e.id} className='col'>
+                        <EmployeeCard _model={e} />
+                    </div>)}
+            </div>
 
             <Modal id={'loginModal'} isVisible={loginModalVis} dismissOnBarrier={false}>
                 <h2>message</h2>
                 <p>please login to continue</p>
-                <IconButton icon={'login'} title='login' onClick={() => {navigate("/login");}} />
+                <IconButton icon={'login'} title='login' onClick={() => { navigate("/login"); }} />
             </Modal>
         </div>
     )

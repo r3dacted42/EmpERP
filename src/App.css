@@ -1,6 +1,13 @@
 * {
     transition: all 150ms;
     /* border: 1px solid red; */
+
+    a {
+        color: black;
+    }
+    a:hover {
+        color: gray;
+    }
 }
 
 body {
@@ -51,4 +58,42 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+.employee-page {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid gray;
+    border-radius: 8px;
+
+    img {
+        border: 1px solid gray;
+        border-radius: 50%;
+        aspect-ratio: 1;
+        padding: 4px;
+        height: 300px;
+    }
+
+    .emp-info {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        gap: 8px;
+
+        .emp-field {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .button-bar {
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            gap: 16px;
+        }
+    }
 }

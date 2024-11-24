@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { apiOrigin } from '../utilities/routes';
 
-export function useFetchAuth() {
+export default function useFetchAuth() {
     const [cookies, setCookies, removeCookies] = useCookies(['username', 'token']);
     const navigate = useNavigate();
 

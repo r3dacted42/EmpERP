@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import TextInput from '../components/TextInput';
-import IconButton from '../components/IconButton';
+import TextInput from '../components/general/TextInput';
+import IconButton from '../components/general/IconButton';
 
 function Register() {
     const [cookies, setCookies, removeCookies] = useCookies(['username', 'token']);

@@ -1,3 +1,4 @@
+import EmployeeModel from "../pages/Employee";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -16,7 +17,11 @@ export var routes = [
     {
         path: "/register",
         element: <Register />
-    }, 
+    },
+    {
+        path: "/:employee_id",
+        element: <EmployeeModel />
+    }
 ]
 
 export var pathMap = {

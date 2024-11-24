@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import LogoutButton from './LogoutButton';
 import IconButton from './IconButton';
 import './Navbar.css';
-import {pathMap} from '../utilities/routes'
+import {pathMap} from '../../utilities/routes'
 
 function Navbar({pathname}) {
     const navigate = useNavigate();
