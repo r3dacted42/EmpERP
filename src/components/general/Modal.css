@@ -4,8 +4,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: black;
-    opacity: 75%;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +13,9 @@
 }
 
 .my-modal {
-    width: 300px;
+    min-width: 300px;
+    opacity: 95%;
+    width: auto;
     height: min-content;
     border: 1px solid grey;
     border-radius: 9px;

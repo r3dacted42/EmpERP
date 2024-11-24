@@ -78,8 +78,8 @@ function Register() {
             ...formData,
             [key]: val
         });
-        setUnameStatus(null);
         if (e.target.name === 'username') {
+            setUnameStatus(null);
             clearTimeout(timeoutId);
             setTimeoutId(setTimeout(() => checkUsernameAvailable(val), 1000));
         }
@@ -98,7 +98,7 @@ function Register() {
                 <h2>register</h2>
                 <form onSubmit={onRegisterSubmit}>
                     <TextInput icon={'alternate_email'} placeholder={'username'} id={'username'} name={'username'}
-                        minLength={8} maxLength={255} iconEnd={(unameStatus == null ? 'pending' : (unameStatus ? 'check_circle' : 'cancel'))} 
+                        minLength={5} maxLength={255} iconEnd={(unameStatus == null ? 'pending' : (unameStatus ? 'check_circle' : 'cancel'))} 
                         onChange={handleChange} iconEndColor={(unameStatus == null ? 'grey' : (unameStatus ? 'green' : 'red'))}
                         iconEndHover={(unameStatus == null ? 'enter a username to check availability' 
                         : (unameStatus ? 'username available' : 'username taken'))} required />

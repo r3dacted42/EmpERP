@@ -12,8 +12,9 @@
         border: 1px solid gray;
         border-radius: 50%;
         aspect-ratio: 1;
-        height: 150px;
-        padding: 2px;
+        height: 100px;
+        margin: 8px;
+        padding: 4px;
     }
 
     .emp-intro {
@@ -30,4 +31,8 @@
             justify-content: end;
         }
     }
+}
+
+.employee-card:hover {
+    background-color: whitesmoke;
 }

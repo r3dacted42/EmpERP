@@ -9,7 +9,9 @@ function Modal({ id, title, children, showClose, toggleVis, dismissOnBarrier = t
         // add listeners
         if (isVisible && dismissOnBarrier) {
             const barrier = document.getElementById(barrierId);
-            const barrierListener = (e) => { toggleVis() };
+            const barrierListener = (e) => { 
+                if (e.target.id == barrierId) toggleVis();
+            };
             barrier.addEventListener('pointerdown', barrierListener);
             return (() => {
                 barrier.removeEventListener('pointerdown', barrierListener);

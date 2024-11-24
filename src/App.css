@@ -30,7 +30,7 @@ button.sm {
     font-size: small;
 }
 button:hover {
-    background-color: rgb(202, 202, 202);
+    background-color: whitesmoke;
 }
 
 h2 {
@@ -63,9 +63,11 @@ h2 {
 .employee-page {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 16px;
     padding: 16px;
     border: 1px solid gray;
+    background-color: whitesmoke;
     border-radius: 8px;
 
     img {

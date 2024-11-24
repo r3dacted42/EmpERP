@@ -5,6 +5,7 @@ import Navbar from '../components/general/Navbar';
 import Modal from '../components/general/Modal';
 import IconButton from '../components/general/IconButton';
 import EmployeeModel from '../models/EmployeeModel';
+import EmployeeModal from '../components/employee/EmployeeModal';
 
 function Employee() {
     const navigate = useNavigate();
@@ -12,8 +13,10 @@ function Employee() {
     const fetchAuth = useFetchAuth();
     const [loginModalVis, setLoginModalVis] = useState(false);
     const [employee, setEmployee] = useState(null);
+    const [editModalVis, setEditModalVis] = useState(false);
+    const [deleteModalVis, setDeleteModalVis] = useState(false);
 
-    useEffect(() => {
+    function fetchData() {
         fetchAuth(`/employees/${employee_id}`, 'get', null, null)
             .then((res) => {
                 if (res == null) {
@@ -24,6 +27,8 @@ function Employee() {
                     res.json()
                         .then((data) => {
                             setEmployee(new EmployeeModel(data));
+                            setEditModalVis(false);
+                            setDeleteModalVis(false);
                         });
                 } else {
                     res.text()
@@ -32,6 +37,10 @@ function Employee() {
                         });
                 }
             });
+    }
+
+    useEffect(() => {
+        fetchData();
     }, []);
 
     return (
@@ -60,8 +69,8 @@ function Employee() {
                             </span>
                             <div className='flex-grow-1'></div>
                             <span className='button-bar'>
-                                <IconButton icon={'edit'} title={'edit'} />
-                                <IconButton icon={'delete'} title={'delete'} />
+                                <IconButton icon={'edit'} title={'edit'} onClick={() => setEditModalVis(true)} />
+                                <IconButton icon={'delete'} title={'delete'} onClick={() => setDeleteModalVis(true)} />
                             </span>
                         </div>
                     </div>
@@ -70,6 +79,19 @@ function Employee() {
                         loading...
                     </div>
             }
+
+            <EmployeeModal id={"addEditModal"} isVisible={editModalVis} model={employee}
+                toggleVis={() => { setEditModalVis(false); }} onSave={(d) => navigate(`/${d.employee_id}`)} onUnauth={() => setLoginModalVis(true)} />
+
+            <Modal id={"deleteModal"} isVisible={deleteModalVis}
+                toggleVis={() => { setDeleteModalVis(false); }}>
+                <h2>delete</h2>
+                <p>are you sure you want to delete {employee ? employee.full_name : ''} ({employee ? employee.employee_id : ''})?</p>
+                <span className='d-flex justify-content-center gap-2'>
+                    <IconButton icon={'delete'} title='confirm' onClick={() => { /* delete one */ navigate("/"); }} />
+                    <IconButton icon={'cancel'} title={'cancel'} onClick={() => { setDeleteModalVis(false) }} />
+                </span>
+            </Modal>
 
             <Modal id={'loginModal'} isVisible={loginModalVis} dismissOnBarrier={false}>
                 <h2>message</h2>

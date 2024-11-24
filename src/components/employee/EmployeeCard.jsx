@@ -25,9 +25,9 @@ function EmployeeCard({ _model, onEdit, onDelete }) {
                     <IconButton icon={'info'} title={showButtonTitle ? 'view' : null}
                         onClick={() => navigate(`/${model.employee_id}`)} />
                     <IconButton icon={'edit'} title={showButtonTitle ? 'edit' : null}
-                        onClick={onEdit} />
+                        onClick={() => onEdit()} />
                     <IconButton icon={'delete'} title={showButtonTitle ? 'delete' : null}
-                        onClick={onDelete} />
+                        onClick={() => onDelete()} />
                 </span>
             </div>
         </div>

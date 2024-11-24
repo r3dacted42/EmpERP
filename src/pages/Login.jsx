@@ -68,9 +68,9 @@ function Login() {
                 <h2>login</h2>
                 <form onSubmit={onLoginSubmit}>
                     <TextInput icon={'alternate_email'} placeholder={'username'} id={'username'} name={'username'}
-                        minLength={8} maxLength={255} onChange={handleChange} />
+                        minLength={5} maxLength={255} onChange={handleChange} required />
                     <TextInput icon={'password'} placeholder={'password'} id={'password'} name={'password'} type={'password'}
-                        minLength={8} maxLength={255} onChange={handleChange} onKeyDown={handleKeyDown} />
+                        minLength={8} maxLength={255} onChange={handleChange} onKeyDown={handleKeyDown} required />
                     <span className='d-flex justify-content-center gap-2'>
                         <IconButton icon={'login'} title='login' type='submit' />
                         <IconButton icon={'person_add'} title={null} onClick={() => navigate("/register")} />

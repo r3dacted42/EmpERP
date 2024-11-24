@@ -1,6 +1,6 @@
 import './TextInput.css'
 
-function TextInput({ icon = "alternate_email", placeholder, type, iconEnd = null, iconEndHover, iconEndColor, ...inputProps }) {
+function TextInput({ icon, placeholder, type = 'text', iconEnd, iconEndHover, iconEndColor, ...inputProps }) {
     let inputStyle = {
         'paddingLeft': '4px',
         'paddingRight': '4px'
