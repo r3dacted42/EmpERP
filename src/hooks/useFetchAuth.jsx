@@ -1,15 +1,16 @@
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { apiOrigin } from '../utilities/routes';
 
 export function useFetchAuth() {
     const [cookies, setCookies, removeCookies] = useCookies(['username', 'token']);
     const navigate = useNavigate();
 
     const fetchAuth = (
-        url, 
-        method = 'post', 
-        body = null, 
+        endpoint,
+        method = 'post',
+        body = null,
         contentType = 'json'
     ) => {
         let expired = true;
@@ -23,8 +24,9 @@ export function useFetchAuth() {
             removeCookies('token');
             // navigate("/login");
             console.log("login needed");
-            return new Promise((res) => {res(null);});
+            return new Promise((res) => { res(null); });
         }
+        endpoint = apiOrigin + endpoint;
         let headers = {
             "Authorization": `Bearer ${cookies.token}`
         };
@@ -41,7 +43,7 @@ export function useFetchAuth() {
                 body: JSON.stringify(body)
             };
         }
-        return fetch(url, options);
+        return fetch(endpoint, options);
     }
 
     return fetchAuth;
