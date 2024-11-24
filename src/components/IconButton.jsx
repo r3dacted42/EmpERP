@@ -2,17 +2,17 @@ import './IconButton.css';
 
 function IconButton({ icon, title = "button", onClick, small = false, ...buttonProps }) {
     let buttonStyle = {
-        'padding-left': '16px'
+        'paddingLeft': '16px'
     };
     let iconStyle = {
-        'font-size': '1.3em'
+        'fontSize': '1.3em'
     };
     if (small) {
-        buttonStyle['padding-left'] = '8px';
-        buttonStyle['padding-right'] = '8px';
-        buttonStyle['font-size'] = 'small';
+        buttonStyle['paddingLeft'] = '8px';
+        buttonStyle['paddingRight'] = '8px';
+        buttonStyle['fontSize'] = 'small';
         buttonStyle['height'] = 'min-content';
-        iconStyle['font-size'] = 'small';
+        iconStyle['fontSize'] = 'small';
     }
     if (buttonProps.disabled) {
         iconStyle['color'] = 'gray';
@@ -26,7 +26,7 @@ function IconButton({ icon, title = "button", onClick, small = false, ...buttonP
             </span>
         )
     }
-    if (icon != null) buttonStyle['padding-left'] = small ? '25px' : '37px';
+    if (icon != null) buttonStyle['paddingLeft'] = small ? '25px' : '37px';
     return (
         <span className='icon-button'>
             <span style={iconStyle} className='icon material-icons'>{icon}</span>

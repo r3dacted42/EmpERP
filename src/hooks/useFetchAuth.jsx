@@ -19,11 +19,11 @@ export function useFetchAuth() {
             expired = Date.now() > expTime;
         }
         if (!(cookies.token && cookies.username) || expired) {
-            alert("please login to continue");
             removeCookies('username');
             removeCookies('token');
-            navigate("/login");
-            return new Promise(() => false);
+            // navigate("/login");
+            console.log("login needed");
+            return new Promise((res) => {res(null);});
         }
         let headers = {
             "Authorization": `Bearer ${cookies.token}`

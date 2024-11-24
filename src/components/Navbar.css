@@ -1,0 +1,9 @@
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 0px 8px 0px;
+    border-bottom: 1px solid gray;
+    margin-bottom: 16px;
+}

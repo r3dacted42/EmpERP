@@ -1,0 +1,27 @@
+.barrier {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: black;
+    opacity: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    pointer-events: all;
+}
+
+.my-modal {
+    width: 300px;
+    height: min-content;
+    border: 1px solid grey;
+    border-radius: 9px;
+    background-color: gainsboro;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    gap: 8px;
+    padding: 8px;
+}

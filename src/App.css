@@ -30,7 +30,7 @@ h2 {
     flex-grow: 1;
     font-size: 2.5em;
     text-align: end;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 .login-page {
@@ -50,12 +50,5 @@ h2 {
     background-color: whitesmoke;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-}
-
-.navbar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
     gap: 8px;
 }

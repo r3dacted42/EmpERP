@@ -2,11 +2,11 @@ import './TextInput.css'
 
 function TextInput({ icon = "alternate_email", placeholder, type, iconEnd = null, iconEndHover, iconEndColor, ...inputProps }) {
     let inputStyle = {
-        'padding-left': '4px',
-        'padding-right': '4px'
+        'paddingLeft': '4px',
+        'paddingRight': '4px'
     };
-    if (icon != null) inputStyle['padding-left'] = '32px';
-    if (iconEnd != null) inputStyle['padding-right'] = '32px';
+    if (icon != null) inputStyle['paddingLeft'] = '32px';
+    if (iconEnd != null) inputStyle['paddingRight'] = '32px';
     let iconEndStyle = {};
     if (iconEndColor) iconEndStyle['color'] = iconEndColor;
     return (

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie';
+import IconButton from './IconButton';
 
 function LogoutButton() {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ function LogoutButton() {
     }
 
     return (
-        <button onClick={logout}>logout</button>
+        <IconButton icon={'logout'} title='logout' onClick={logout}>logout</IconButton>
     )
 }
 
