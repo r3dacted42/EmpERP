@@ -17,7 +17,6 @@ function EmployeeCard({ _model, onEdit, onDelete }) {
     useEffect(() => {
         setModel(_model);
         const newUrl = `${_model.photo_url}?ver=${new Date().getTime()}`;
-        console.log(`setting photo url to ${newUrl}`);
         document.getElementById(`${model.employee_id}photo`).src = newUrl;
     }, [_model]);
 

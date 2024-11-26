@@ -103,7 +103,7 @@ function Department() {
                                 <>
                                     <h4>employees</h4>
                                     {employees.map((e) =>
-                                        <div>
+                                        <div key={e.employee_id}>
                                             <Link to={`/${e.employee_id}`}>{e.full_name} ({e.employee_id})</Link>
                                         </div>
                                     )}

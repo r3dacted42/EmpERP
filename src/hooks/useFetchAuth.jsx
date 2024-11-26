@@ -22,7 +22,6 @@ export default function useFetchAuth() {
         if (!(cookies.token && cookies.username) || expired) {
             removeCookies('username');
             removeCookies('token');
-            // navigate("/login");
             console.log("login needed");
             return new Promise((res) => { res(null); });
         }
@@ -50,8 +49,6 @@ export default function useFetchAuth() {
                 body: body
             };
         }
-        console.log(endpoint);
-        console.log(options);
         return fetch(endpoint, options);
     }
 
