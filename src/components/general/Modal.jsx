@@ -17,7 +17,7 @@ function Modal({ id, title, children, showClose, toggleVis, dismissOnBarrier = t
                 barrier.removeEventListener('pointerdown', barrierListener);
             })
         }
-    }, [isVisible]);
+    }, [isVisible, dismissOnBarrier]);
 
     if (isVisible) {
         return (

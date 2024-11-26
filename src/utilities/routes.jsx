@@ -1,4 +1,6 @@
+import AllDepartments from "../pages/AllDepartments";
 import EmployeeModel from "../pages/Employee";
+import Department from "../pages/Department";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -21,6 +23,14 @@ export var routes = [
     {
         path: "/:employee_id",
         element: <EmployeeModel />
+    },
+    {
+        path: "/departments",
+        element: <AllDepartments />
+    },
+    {
+        path: "/departments/:department_id",
+        element: <Department />
     }
 ]
 

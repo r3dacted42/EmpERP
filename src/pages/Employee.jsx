@@ -43,6 +43,13 @@ function Employee() {
         fetchData();
     }, []);
 
+    async function onDelete() {
+        let res = await fetchAuth(`/employees/${employee.id}`, 'delete');
+        if (res.status === 200) {
+            navigate("/");
+        }
+    }
+
     return (
         <div className='container'>
             <h2>{employee_id}</h2>
@@ -52,7 +59,9 @@ function Employee() {
                 employee
                     ?
                     <div className='employee-page'>
-                        <img src={employee.photo_url} alt={employee.employee_id + "'s photo"}></img>
+                        <img src={employee.photo_url} onError={(e) => {
+                            e.target.src = `${process.env.PUBLIC_URL}/images/profile.png`;
+                        }} alt={employee.employee_id + "'s photo"}></img>
                         <div className='emp-info'>
                             <h3 className='text-align-center'>{employee.full_name}</h3>
                             <span className='emp-field'>
@@ -88,7 +97,7 @@ function Employee() {
                 <h2>delete</h2>
                 <p>are you sure you want to delete {employee ? employee.full_name : ''} ({employee ? employee.employee_id : ''})?</p>
                 <span className='d-flex justify-content-center gap-2'>
-                    <IconButton icon={'delete'} title='confirm' onClick={() => { /* delete one */ navigate("/"); }} />
+                    <IconButton icon={'delete'} title='confirm' onClick={onDelete} />
                     <IconButton icon={'cancel'} title={'cancel'} onClick={() => { setDeleteModalVis(false) }} />
                 </span>
             </Modal>

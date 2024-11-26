@@ -44,6 +44,31 @@ function Home() {
         fetchData();
     }, []);
 
+    function onSave(data, updated) {
+        const newEmp = new EmployeeModel(data);
+        if (updated) {
+            const idx = employees.findIndex(e => e.employee_id === data.employee_id);
+            console.log(`updating index ${idx}`);
+            let newEmps = employees;
+            newEmps[idx] = newEmp;
+            setEmployees(newEmps);
+        } else {
+            let newEmps = [newEmp, ...employees];
+            setEmployees(newEmps);
+        }
+    }
+
+    async function onDelete(id) {
+        let res = await fetchAuth(`/employees/${id}`, 'delete');
+        if (res.status === 200) {
+            let newEmps = employees;
+            newEmps.splice(newEmps.findIndex(e => e.id === id), 1);
+            setEmployees(newEmps);
+            setDeleteModalVis(false);
+            setCurrentEmp(null);
+        }
+    }
+
     return (
         <div className='container'>
             <h2>employees</h2>
@@ -62,28 +87,15 @@ function Home() {
                     </div>)}
             </div>
 
-            <EmployeeModal id={"addEditModal"} isVisible={editModalVis} model={currentEmp}
-                toggleVis={() => { setEditModalVis(false); setCurrentEmp(null); }} onSave={(d, updated) => {
-                    const newEmp = new EmployeeModel(d);
-                    if (updated) {
-                        const idx = employees.findIndex((e) => e.employee_id = d.employee_id);
-                        newEmp.id = employees[idx].id;
-                        newEmp.photo_url = employees[idx].photo_url;
-                        let newEmps = employees;
-                        newEmps[idx] = newEmp;
-                        setEmployees(newEmps);
-                    } else {
-                        let newEmps = [newEmp, ...employees];
-                        setEmployees(newEmps);
-                    }
-                }} onUnauth={() => { setLoginModalVis(true) }} />
+            <EmployeeModal id={"addEditModal"} isVisible={editModalVis} model={currentEmp} toggleVis={() => { setEditModalVis(false); 
+                setCurrentEmp(null); }} onSave={onSave} onUnauth={() => { setLoginModalVis(true) }} />
 
             <Modal id={"deleteModal"} isVisible={deleteModalVis}
                 toggleVis={() => { setDeleteModalVis(false); setCurrentEmp(null); }} onRefresh={() => fetchData()}>
                 <h2>delete</h2>
                 <p>are you sure you want to delete {currentEmp ? currentEmp.full_name : ''} ({currentEmp ? currentEmp.employee_id : ''})?</p>
                 <span className='d-flex justify-content-center gap-2'>
-                    <IconButton icon={'delete'} title='confirm' onClick={() => { /* delete one */ }} />
+                    <IconButton icon={'delete'} title='confirm' onClick={() => { onDelete(currentEmp.id); }} />
                     <IconButton icon={'cancel'} title={'cancel'} onClick={() => { setDeleteModalVis(false); setCurrentEmp(null); }} />
                 </span>
             </Modal>

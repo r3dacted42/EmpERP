@@ -3,20 +3,25 @@ import Modal from '../general/Modal'
 import TextInput from '../general/TextInput'
 import IconButton from '../general/IconButton';
 import useFetchAuth from '../../hooks/useFetchAuth';
+import DepartmentSelect from '../department/DepartmentSelect';
+import ImagePicker from '../general/ImagePicker';
 
 function EmployeeModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) {
     const fetchAuth = useFetchAuth();
-    const [formData, setFormData] = useState({
+    const emptyFormData = {
         employee_id: '',
         first_name: '',
         last_name: '',
         email: '',
         title: '',
         department_id: ''
-    });
+    };
+    const [formData, setFormData] = useState(emptyFormData);
     const [timeoutId, setTimeoutId] = useState(null);
     const [empidStatus, setEmpidStatus] = useState(null);
     const [serverMsg, setServerMsg] = useState('');
+    const [imageUrl, setImageUrl] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
         if (model) {
@@ -27,45 +32,58 @@ function EmployeeModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) {
                 email: model.email,
                 title: model.title,
                 department_id: model.department_id
-            })
+            });
             setEmpidStatus(true);
+            setImageUrl(model.photo_url);
+        } else {
+            setFormData(emptyFormData);
+            setEmpidStatus(null);
         }
+        setServerMsg(null);
+        setSubmitting(false);
     }, [model]);
 
-    function onSubmit(e) {
+    async function onSubmit(e) {
         if (e) e.preventDefault();
-        if (!empidStatus) return;
-        const newFormData = {};
-        for (let k in formData) newFormData[k] = formData[k].trim();
-        setFormData(newFormData); 
+        setSubmitting(true);
+        setServerMsg("submitting...");
+        const newFormData = Object.keys(formData).reduce((trimmed, key) => {
+            const val = formData[key];
+            trimmed[key] = typeof val === 'string' ? val.trim() : val;
+            return trimmed;
+        }, {});
+        let res = null;
         if (model) {
-            fetchAuth(`/employees/${model.id}`, 'patch', formData)
-                .then((res) => {
-                    if (res == null) {
-                        onUnauth();
-                        return;
-                    }
-                    if (res.status === 200) {
-                        onSave(formData, true);
-                        toggleVis();
-                    }
-                })
+            res = await fetchAuth(`/employees/${model.id}`, 'patch', newFormData, 'json');
+            if (res == null) { onUnauth(); return; }
         } else {
-            fetchAuth("/employees", 'post', formData)
-                .then((res) => {
-                    if (res == null) {
-                        onUnauth();
-                        return;
-                    }
-                    if (res.status === 201) {
-                        onSave(formData, false);
-                        toggleVis();
-                    } else {
-                        res.text().then((j) => {
-                            setServerMsg(j);
-                        })
-                    }
-                })
+            res = await fetchAuth("/employees", 'post', newFormData, 'json');
+            if (res == null) { onUnauth(); return; }
+        }
+        let success = (res.status === 200 || res.status === 201);
+        if (!success) res.text().then((j) => { setServerMsg(j); })
+        else {
+            // send image
+            const newModel = await res.json(); // get id of updated/newly created employee
+            const fdata = new FormData(e.target);
+            const photo = fdata.get('photo');
+            if (photo.name === '' || photo.size === 0)
+                res = await fetchAuth(`/employees/${newModel.id}/photo`, 'patch');
+            else
+                res = await fetchAuth(`/employees/${newModel.id}/photo`, 'patch', fdata.get('photo'), 'file');
+            if (res.status === 200) {
+                onSave(newModel, model != null);
+            } else {
+                success = false;
+            }
+            res.text().then((j) => {
+                setServerMsg(serverMsg ?? '' + " " + j);
+            })
+        }
+        setSubmitting(false);
+        if (success) {
+            setServerMsg(null);
+            toggleVis();
         }
     }
 
@@ -109,9 +127,10 @@ function EmployeeModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) {
     }
 
     return (
-        <Modal id={id} isVisible={isVisible} dismissOnBarrier={true} toggleVis={toggleVis}>
+        <Modal id={id} isVisible={isVisible} dismissOnBarrier={!submitting} toggleVis={toggleVis}>
             <h2>{model ? 'edit' : 'add'} employee</h2>
             <form onSubmit={onSubmit}>
+                <ImagePicker inputId={'photo'} name={'photo'} currentImgPath={model ? model.photo_url : null} />
                 <TextInput placeholder={'employee id'} id={'employee_id'} name={'employee_id'}
                     minLength={3} maxLength={255} onChange={handleChange} value={formData.employee_id}
                     iconEnd={(empidStatus == null ? 'pending' : (empidStatus ? 'check_circle' : 'cancel'))}
@@ -126,11 +145,11 @@ function EmployeeModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) {
                     minLength={3} maxLength={255} onChange={handleChange} value={formData.title} required />
                 <TextInput type='email' placeholder={'email'} id={'email'} name={'email'}
                     onChange={handleChange} value={formData.email} required />
-                <TextInput placeholder={'department id'} id={'department_id'} name={'department_id'}
-                    onChange={handleChange} value={formData.department_id} />
+                <DepartmentSelect placeholder={'department id'} id={'department_id'} name={'department_id'}
+                    onChange={handleChange} currentValue={formData.department_id} onUnauth={onUnauth} />
                 <span className='d-flex justify-content-center gap-2'>
-                    <IconButton icon={'save'} title='save' type='submit' />
-                    <IconButton icon={'cancel'} title={'cancel'} onClick={toggleVis} />
+                    <IconButton icon={'save'} title='save' type='submit' disabled={submitting} />
+                    <IconButton icon={'cancel'} title={'cancel'} onClick={toggleVis} disabled={submitting} />
                 </span>
                 <span id='server-said'>{serverMsg}</span>
             </form>

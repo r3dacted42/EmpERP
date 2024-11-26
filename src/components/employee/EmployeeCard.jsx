@@ -14,9 +14,19 @@ function EmployeeCard({ _model, onEdit, onDelete }) {
         setShowButtonTitle(windowDimensions.width > 500);
     }, [windowDimensions]);
 
+    useEffect(() => {
+        setModel(_model);
+        const newUrl = `${_model.photo_url}?ver=${new Date().getTime()}`;
+        console.log(`setting photo url to ${newUrl}`);
+        document.getElementById(`${model.employee_id}photo`).src = newUrl;
+    }, [_model]);
+
     return (
         <div className='employee-card'>
-            <img src={model.photo_url} alt={model.employee_id + "'s photo"}></img>
+            <img src={model.photo_url} id={`${model.employee_id}photo`} onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = `${process.env.PUBLIC_URL}/images/profile.png`;
+            }} alt={model.employee_id + "'s photo"}></img>
             <div className='emp-intro'>
                 <h4 className='text-align-center'>{model.full_name}</h4>
                 <div>{model.title}</div>

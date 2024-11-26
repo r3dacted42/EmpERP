@@ -11,7 +11,7 @@ export default function useFetchAuth() {
         endpoint,
         method = 'post',
         body = null,
-        contentType = 'json'
+        contentType
     ) => {
         let expired = true;
         if (cookies.token) {
@@ -32,6 +32,13 @@ export default function useFetchAuth() {
         };
         if (contentType === 'json') {
             headers["Content-Type"] = "application/json; charset=UTF-8";
+            body = JSON.stringify(body);
+        }
+        if (contentType === 'file') {
+            const formData = new FormData();
+            formData.append('photo', body);
+            body = formData;
+            // headers["Content-Type"] = 'multipart/form-data'; :)))))))))))))
         }
         let options = {
             method: method.toUpperCase(),
@@ -40,9 +47,11 @@ export default function useFetchAuth() {
         if (body != null) {
             options = {
                 ...options,
-                body: JSON.stringify(body)
+                body: body
             };
         }
+        console.log(endpoint);
+        console.log(options);
         return fetch(endpoint, options);
     }
 

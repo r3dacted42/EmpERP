@@ -1,0 +1,14 @@
+.dept-select {
+    border: 1px solid gray;
+    border-radius: 9px;
+    overflow: hidden;
+    margin: 8px 0;
+    align-self: stretch;
+
+    select {
+        padding: 4px;
+        border-radius: 8px;
+        border: 0px solid black;
+        width: 100%;
+    }
+}
