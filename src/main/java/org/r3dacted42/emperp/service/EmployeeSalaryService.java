@@ -5,12 +5,14 @@ import org.r3dacted42.emperp.dto.EmployeeSalaryRequest;
 import org.r3dacted42.emperp.dto.EmployeeSalaryResponse;
 import org.r3dacted42.emperp.entity.Employee;
 import org.r3dacted42.emperp.entity.EmployeeSalary;
+import org.r3dacted42.emperp.mapper.EmployeeMapper;
 import org.r3dacted42.emperp.mapper.EmployeeSalaryMapper;
 import org.r3dacted42.emperp.repository.EmployeeRepository;
 import org.r3dacted42.emperp.repository.EmployeeSalaryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +31,14 @@ public class EmployeeSalaryService {
         return employeeSalaryMapper.toResponse(employeeSalaryRepository.save(employeeSalary));
     }
 
-    public List<EmployeeSalaryResponse> getAllEmployeeSalaries() {
+    public List<EmployeeSalaryResponse> getAllEmployeeSalaries(Long employee_id) {
+        if (employee_id != null) {
+            if (!employeeRepository.existsById(employee_id)) {
+                return null;
+            }
+            return Objects.requireNonNull(employeeRepository.findById(employee_id).orElse(null))
+                    .getSalaries().stream().map(employeeSalaryMapper::toResponse).toList();
+        }
         return employeeSalaryRepository.findAll().stream().map(employeeSalaryMapper::toResponse).toList();
     }
 
@@ -50,7 +59,7 @@ public class EmployeeSalaryService {
         if (!employeeSalaryRepository.existsById(id)) {
             return null;
         }
-        employeeRepository.deleteById(id);
+        employeeSalaryRepository.deleteById(id);
         return "employee salary deleted";
     }
 }

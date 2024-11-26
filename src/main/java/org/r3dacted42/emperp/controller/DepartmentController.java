@@ -32,13 +32,6 @@ public class DepartmentController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/{departmentId}/employees")
-    public ResponseEntity<List<EmployeeResponse>> getDepartmentEmployees(@PathVariable("departmentId") Long departmentId) {
-        List<EmployeeResponse> res = departmentService.getDepartmentEmployees(departmentId);
-        if (res == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(res);
-    }
-
     @PostMapping
     public ResponseEntity<DepartmentResponse> createDepartment(@RequestBody @Valid DepartmentRequest departmentRequest) {
         DepartmentResponse res = departmentService.createDepartment(departmentRequest);

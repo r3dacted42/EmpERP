@@ -52,7 +52,14 @@ public class EmployeeService {
         return employeeMapper.toResponse(employeeRepository.save(employee));
     }
 
-    public List<EmployeeResponse> getAllEmployees() {
+    public List<EmployeeResponse> getAllEmployees(Long department_id) {
+        if (department_id != null) {
+            if (!departmentRepository.existsById(department_id)) {
+                return null;
+            }
+            return Objects.requireNonNull(departmentRepository.findById(department_id).orElse(null))
+                    .getEmployees().stream().map(employeeMapper::toResponse).toList();
+        }
         return employeeRepository.findAll().stream().map(employeeMapper::toResponse).toList();
     }
 

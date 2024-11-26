@@ -24,8 +24,10 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public ResponseEntity<List<EmployeeResponse>> getAllEmployees() {
-        return ResponseEntity.ok(employeeService.getAllEmployees());
+    public ResponseEntity<List<EmployeeResponse>> getAllEmployees(
+            @RequestParam(value = "department_id", required = false) Long department_id
+    ) {
+        return ResponseEntity.ok(employeeService.getAllEmployees(department_id));
     }
 
     @GetMapping("/{employeeId}")

@@ -41,14 +41,6 @@ public class DepartmentService {
         ).orElse(null);
     }
 
-    public List<EmployeeResponse> getDepartmentEmployees(Long departmentId) {
-        if (!departmentRepository.existsById(departmentId)) {
-            return null;
-        }
-        Department department = departmentRepository.findById(departmentId).orElse(null);
-        return Objects.requireNonNull(department).getEmployees().stream().map(employeeMapper::toResponse).toList();
-    }
-
     public DepartmentResponse updateDepartment(Long departmentId, DepartmentRequest request) {
         if (!departmentRepository.existsById(departmentId)) {
             return null;

@@ -19,8 +19,10 @@ public class EmployeeSalaryController {
     private final EmployeeSalaryService employeeSalaryService;
 
     @GetMapping
-    public ResponseEntity<List<EmployeeSalaryResponse>> getAllEmployeeSalaries() {
-        return ResponseEntity.ok(employeeSalaryService.getAllEmployeeSalaries());
+    public ResponseEntity<List<EmployeeSalaryResponse>> getAllEmployeeSalaries(
+            @RequestParam(value = "employee_id", required = false) Long employee_id
+    ) {
+        return ResponseEntity.ok(employeeSalaryService.getAllEmployeeSalaries(employee_id));
     }
 
     @GetMapping("/{id}")
