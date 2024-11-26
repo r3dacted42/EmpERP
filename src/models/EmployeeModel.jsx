@@ -10,7 +10,7 @@ export default class EmployeeModel {
         this.email = data.email;
         this.department_id = data.department_id;
         this.department_name = data.department_name;
-        this.photo_url = `${apiOrigin}/employees/${data.employee_id}/photo`;
+        this.photo_url = `${apiOrigin}/employees/${data.employee_id}/photo?ver=${new Date().getMilliseconds()}`;
     }
 
     get full_name() {

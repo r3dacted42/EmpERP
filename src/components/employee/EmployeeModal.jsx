@@ -20,7 +20,6 @@ function EmployeeModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) {
     const [timeoutId, setTimeoutId] = useState(null);
     const [empidStatus, setEmpidStatus] = useState(null);
     const [serverMsg, setServerMsg] = useState('');
-    const [imageUrl, setImageUrl] = useState(null);
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
@@ -34,7 +33,6 @@ function EmployeeModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) {
                 department_id: model.department_id
             });
             setEmpidStatus(true);
-            setImageUrl(model.photo_url);
         } else {
             setFormData(emptyFormData);
             setEmpidStatus(null);
@@ -77,7 +75,7 @@ function EmployeeModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) {
                 success = false;
             }
             res.text().then((j) => {
-                setServerMsg(serverMsg ?? '' + " " + j);
+                setServerMsg(j);
             })
         }
         setSubmitting(false);

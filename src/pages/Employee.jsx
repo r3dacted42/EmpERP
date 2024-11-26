@@ -6,6 +6,7 @@ import Modal from '../components/general/Modal';
 import IconButton from '../components/general/IconButton';
 import EmployeeModel from '../models/EmployeeModel';
 import EmployeeModal from '../components/employee/EmployeeModal';
+import SalaryManager from '../components/salary/SalaryManager';
 
 function Employee() {
     const navigate = useNavigate();
@@ -26,7 +27,9 @@ function Employee() {
                 if (res.status === 200) {
                     res.json()
                         .then((data) => {
-                            setEmployee(new EmployeeModel(data));
+                            const emp = new EmployeeModel(data);
+                            emp.photo_url = emp.photo_url + `${new Date().getMilliseconds()}`;
+                            setEmployee(emp);
                             setEditModalVis(false);
                             setDeleteModalVis(false);
                         });
@@ -89,8 +92,15 @@ function Employee() {
                     </div>
             }
 
+            <SalaryManager employee_id={employee ? employee.id : null} onUnAuth={() => setLoginModalVis(true)} />
+
             <EmployeeModal id={"addEditModal"} isVisible={editModalVis} model={employee}
-                toggleVis={() => { setEditModalVis(false); }} onSave={(d) => navigate(`/${d.employee_id}`)} onUnauth={() => setLoginModalVis(true)} />
+                toggleVis={() => { setEditModalVis(false); }} onSave={(d) => { 
+                    setEmployee(null); 
+                    fetchData();
+                    navigate(`/${d.employee_id}`); 
+                }} 
+                onUnauth={() => setLoginModalVis(true)} />
 
             <Modal id={"deleteModal"} isVisible={deleteModalVis}
                 toggleVis={() => { setDeleteModalVis(false); }}>

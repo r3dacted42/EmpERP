@@ -1,0 +1,10 @@
+.salary-manager {
+    margin-top: 16px;
+
+    .top-bar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+    }
+}

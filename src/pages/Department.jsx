@@ -40,7 +40,7 @@ function Department() {
                         });
                 }
             });
-        fetchAuth(`/departments/${department_id}/employees`, 'get')
+        fetchAuth(`/employees?department_id=${department_id}`, 'get')
             .then((res) => {
                 if (res == null) {
                     setLoginModalVis(true);
@@ -98,15 +98,20 @@ function Department() {
                             </span>
                         </div>
                         {
-                            employees != []
+                            employees.length > 0
                                 ?
                                 <>
                                     <h4>employees</h4>
-                                    {employees.map((e) =>
-                                        <div key={e.employee_id}>
-                                            <Link to={`/${e.employee_id}`}>{e.full_name} ({e.employee_id})</Link>
+                                    <div className='emps-list row row-cols-1 row-cols-lg-2 row-gap-2'>
+                                        {employees.map((e) =>
+                                        <div key={e.employee_id} className='col'>
+                                            <div className='emp-list-item'>
+                                                <img src={e.photo_url} alt={`${e.employee_id}'s photo`}></img>
+                                                <Link to={`/${e.employee_id}`}>{e.full_name} ({e.employee_id})</Link>
+                                            </div>                                            
                                         </div>
-                                    )}
+                                        )}
+                                    </div>
                                 </>
                                 :
                                 null
