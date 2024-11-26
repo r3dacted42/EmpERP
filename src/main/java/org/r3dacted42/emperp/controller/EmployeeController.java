@@ -68,7 +68,7 @@ public class EmployeeController {
         return ResponseEntity.ok(res);
     }
 
-    @PatchMapping("/photo/{id}")
+    @PatchMapping("/{id}/photo")
     public ResponseEntity<String> updateEmployeePhoto(@PathVariable Long id, @RequestBody MultipartFile photo) throws IOException {
         Pair<String, Boolean> res = employeeService.updateEmployeePhoto(id, photo);
         if (!res.b) return ResponseEntity.badRequest().body(res.a);

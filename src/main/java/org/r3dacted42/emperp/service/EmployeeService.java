@@ -81,6 +81,10 @@ public class EmployeeService {
         if (department == null) {
             return "department not found";
         }
+        if (!Objects.equals(Objects.requireNonNull(employee).getDepartment().getDepartmentId(), department.getDepartmentId())
+                && department.getCapacity() <= departmentRepository.getEmployeeCount(request.departmentId())) {
+            return "department capacity full";
+        }
         Employee updatedEmployee = employeeMapper.toEntity(request);
         updatedEmployee.setId(id);
         updatedEmployee.setDepartment(department);
@@ -102,18 +106,23 @@ public class EmployeeService {
         if (!employeeRepository.existsById(id)) {
             return new Pair<>("employee not found", false);
         }
-        if (photo == null || photo.getOriginalFilename() == null) {
-            return new Pair<>("invalid photo", false);
-        }
         Employee employee = employeeRepository.findById(id).orElse(null);
         String currentFileName = Objects.requireNonNull(employee).getPhotographPath();
         if (currentFileName != null) {
             Path filePath = Paths.get(imageStoragePath, currentFileName);
             if (Files.exists(filePath)) Files.delete(filePath);
         }
-        employee.setPhotographPath(savePhotoToDisk(photo));
+        Pair<String, Boolean> res;
+        System.out.println(photo);
+        if (photo == null || photo.getOriginalFilename() == null) {
+            employee.setPhotographPath(null);
+            res = new Pair<>("photo deleted", true);
+        } else {
+            employee.setPhotographPath(savePhotoToDisk(photo));
+            res = new Pair<>("photo updated", true);
+        }
         employeeRepository.save(employee);
-        return new Pair<>("photo updated", true);
+        return res;
     }
 
     public String deleteEmployee(long employeeId) throws IOException {

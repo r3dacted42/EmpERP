@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.r3dacted42.emperp.dto.DepartmentRequest;
 import org.r3dacted42.emperp.dto.DepartmentResponse;
+import org.r3dacted42.emperp.dto.EmployeeResponse;
 import org.r3dacted42.emperp.service.DepartmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,13 @@ public class DepartmentController {
     @GetMapping("/{departmentId}")
     public ResponseEntity<DepartmentResponse> getDepartmentById(@PathVariable("departmentId") Long departmentId) {
         DepartmentResponse res = departmentService.getDepartment(departmentId);
+        if (res == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/{departmentId}/employees")
+    public ResponseEntity<List<EmployeeResponse>> getDepartmentEmployees(@PathVariable("departmentId") Long departmentId) {
+        List<EmployeeResponse> res = departmentService.getDepartmentEmployees(departmentId);
         if (res == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(res);
     }

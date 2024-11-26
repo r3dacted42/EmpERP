@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*;
 public record EmployeeRequest(
         @JsonProperty("employee_id")
         @NotEmpty(message = "employee id is required")
-        @Size(min = 1, max = 255, message = "employee id must be 1 to 255 chars long")
+        @Size(min = 3, max = 255, message = "employee id must be 3 to 255 chars long")
         String employeeId,
 
         @JsonProperty("first_name")

@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.r3dacted42.emperp.controller.EmployeeController;
 import org.r3dacted42.emperp.dto.DepartmentRequest;
 import org.r3dacted42.emperp.dto.DepartmentResponse;
+import org.r3dacted42.emperp.dto.EmployeeResponse;
 import org.r3dacted42.emperp.entity.Department;
 import org.r3dacted42.emperp.entity.Employee;
 import org.r3dacted42.emperp.mapper.DepartmentMapper;
+import org.r3dacted42.emperp.mapper.EmployeeMapper;
 import org.r3dacted42.emperp.repository.DepartmentRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final DepartmentMapper departmentMapper;
     private final EmployeeController employeeController;
+    private final EmployeeMapper employeeMapper;
 
     public DepartmentResponse createDepartment(DepartmentRequest request) {
         Department department = departmentMapper.toEntity(request);
@@ -36,6 +39,14 @@ public class DepartmentService {
         return departmentRepository.findById(departmentId).map((e) ->
                 departmentMapper.toResponse(e, departmentRepository.getEmployeeCount(e.getDepartmentId()))
         ).orElse(null);
+    }
+
+    public List<EmployeeResponse> getDepartmentEmployees(Long departmentId) {
+        if (!departmentRepository.existsById(departmentId)) {
+            return null;
+        }
+        Department department = departmentRepository.findById(departmentId).orElse(null);
+        return Objects.requireNonNull(department).getEmployees().stream().map(employeeMapper::toResponse).toList();
     }
 
     public DepartmentResponse updateDepartment(Long departmentId, DepartmentRequest request) {
