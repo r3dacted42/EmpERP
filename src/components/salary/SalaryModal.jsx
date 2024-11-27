@@ -5,7 +5,7 @@ import IconButton from '../general/IconButton';
 import useFetchAuth from '../../hooks/useFetchAuth';
 import DatePicker from '../general/DatePicker';
 
-function SalaryModal({ modalId, employee_id, model, isVisible, toggleVis, onSave, onUnauth }) {
+function SalaryModal({ modalId, employee_id, isVisible, toggleVis, onSave, onUnauth }) {
     const fetchAuth = useFetchAuth();
     const emptyFormData = {
         employee_id: employee_id,
@@ -18,38 +18,23 @@ function SalaryModal({ modalId, employee_id, model, isVisible, toggleVis, onSave
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
-        if (model) {
-            setFormData({
-                employee_id: model.employee_id,
-                payment_date: model.payment_date,
-                amount: model.amount,
-                description: model.description
-            });
-        } else {
-            setFormData(emptyFormData);
-        }
+        setFormData(emptyFormData);
         setServerMsg(null);
         setSubmitting(false);
-    }, [employee_id, model]);
+    }, [employee_id, isVisible]);
 
     async function onSubmit(e) {
         if (e) e.preventDefault();
         setSubmitting(true);
         setServerMsg("submitting...");
-        let res = null;
-        if (model) {
-            res = await fetchAuth(`/salaries/${model.id}`, 'patch', formData, 'json');
-            if (res == null) { onUnauth(); return; }
-        } else {
-            res = await fetchAuth("/salaries", 'post', formData, 'json');
-            if (res == null) { onUnauth(); return; }
-        }
+        let res = await fetchAuth("/salaries", 'post', formData, 'json');
+        if (res == null) { onUnauth(); return; }
         let success = (res.status === 200 || res.status === 201);
         if (!success) res.text().then((j) => { setServerMsg(j); })
         setSubmitting(false);
         if (success) {
             const newModel = await res.json();
-            onSave(newModel, model != null);
+            onSave(newModel);
             setServerMsg(null);
             toggleVis();
         }
@@ -66,7 +51,7 @@ function SalaryModal({ modalId, employee_id, model, isVisible, toggleVis, onSave
 
     return (
         <Modal id={modalId} isVisible={isVisible} dismissOnBarrier={!submitting} toggleVis={toggleVis}>
-            <h2>{model ? 'edit' : 'add'} salary</h2>
+            <h2>add salary</h2>
             <form onSubmit={onSubmit}>
                 <DatePicker id={'payment_date'} name={'payment_date'} onChange={(d) => setFormData({
                     ...formData,

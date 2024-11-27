@@ -1,12 +1,24 @@
 .dept-select {
+    position: relative;
     border: 1px solid gray;
     border-radius: 9px;
     overflow: hidden;
     margin: 8px 0;
     align-self: stretch;
+    display: flex;
+    flex-direction: row;
+
+    .icon {
+        position: absolute;
+        left: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
 
     select {
         padding: 4px;
+        padding-left: 28px;
         border-radius: 8px;
         border: 0px solid black;
         width: 100%;

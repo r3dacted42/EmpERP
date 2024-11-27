@@ -83,11 +83,11 @@ function Department() {
                         <div className='department-info'>
                             <h3 className='text-align-center'>{department.name}</h3>
                             <div className='dept-field'>
-                                <span className='material-icons'>tag</span>
+                                <span className='material-icons'>group</span>
                                 capacity: {department.capacity}
                             </div>
                             <div className='dept-field'>
-                                <span className='material-icons'>person</span>
+                                <span className='material-icons'>tag</span>
                                 strength: {department.strength}
                             </div>
                             <span className='button-bar'>

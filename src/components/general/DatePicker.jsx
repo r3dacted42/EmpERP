@@ -39,8 +39,8 @@ function DatePicker({ onChange }) {
         <div className='date-picker'>
             <span className="material-icons">today</span>
             <input type='number' value={year} min={1900} max={maxYear} onChange={(e) => setYear(e.target.value)} title='year' required></input>
-            <input type='number' value={month} min={1} max={12} onChange={(e) => setMonth(e.target.value)} title='month' required></input>
-            <input type='number' value={date} min={1} max={dateMax} onChange={(e) => setDate(e.target.value)} title='date' required></input>
+            /<input type='number' value={month} min={1} max={12} onChange={(e) => setMonth(e.target.value)} title='month' required></input>
+            /<input type='number' value={date} min={1} max={dateMax} onChange={(e) => setDate(e.target.value)} title='date' required></input>
         </div>
     )
 }

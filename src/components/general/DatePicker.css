@@ -9,7 +9,7 @@
     align-items: center;
     gap: 8px;
     background-color: whitesmoke;
-    justify-content: center;
+    justify-content: space-between;
 
     input {
         background-color: #0000;

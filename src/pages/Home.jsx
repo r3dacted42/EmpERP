@@ -31,12 +31,7 @@ function Home() {
                             setEditModalVis(false);
                             setDeleteModalVis(false);
                         });
-                } else {
-                    res.text()
-                        .then((txt) => {
-                            alert(txt);
-                        });
-                }
+                } else res.text().then((txt) => alert(txt));
             });
     }
 
@@ -61,9 +56,7 @@ function Home() {
     async function onDelete(id) {
         let res = await fetchAuth(`/employees/${id}`, 'delete');
         if (res.status === 200) {
-            let newEmps = employees;
-            newEmps.splice(newEmps.findIndex(e => e.id === id), 1);
-            setEmployees(newEmps);
+            setEmployees((employees) => employees.filter((e) => e.id != id));
             setDeleteModalVis(false);
             setCurrentEmp(null);
         }
@@ -87,8 +80,10 @@ function Home() {
                     </div>)}
             </div>
 
-            <EmployeeModal id={"addEditModal"} isVisible={editModalVis} model={currentEmp} toggleVis={() => { setEditModalVis(false); 
-                setCurrentEmp(null); }} onSave={onSave} onUnauth={() => { setLoginModalVis(true) }} />
+            <EmployeeModal id={"addEditModal"} isVisible={editModalVis} model={currentEmp} toggleVis={() => {
+                setEditModalVis(false);
+                setCurrentEmp(null);
+            }} onSave={onSave} onUnauth={() => { setLoginModalVis(true) }} />
 
             <Modal id={"deleteModal"} isVisible={deleteModalVis}
                 toggleVis={() => { setDeleteModalVis(false); setCurrentEmp(null); }} onRefresh={() => fetchData()}>

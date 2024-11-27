@@ -129,7 +129,7 @@ function EmployeeModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) {
             <h2>{model ? 'edit' : 'add'} employee</h2>
             <form onSubmit={onSubmit}>
                 <ImagePicker inputId={'photo'} name={'photo'} currentImgPath={model ? model.photo_url : null} />
-                <TextInput placeholder={'employee id'} id={'employee_id'} name={'employee_id'}
+                <TextInput icon={'alternate_email'} placeholder={'employee id'} id={'employee_id'} name={'employee_id'}
                     minLength={3} maxLength={255} onChange={handleChange} value={formData.employee_id}
                     iconEnd={(empidStatus == null ? 'pending' : (empidStatus ? 'check_circle' : 'cancel'))}
                     iconEndColor={(empidStatus == null ? 'grey' : (empidStatus ? 'green' : 'red'))}
@@ -139,9 +139,9 @@ function EmployeeModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) {
                     minLength={1} maxLength={255} onChange={handleChange} value={formData.first_name} required />
                 <TextInput placeholder={'last name'} id={'last_name'} name={'last_name'}
                     maxLength={255} onChange={handleChange} value={formData.last_name} />
-                <TextInput placeholder={'title'} id={'title'} name={'title'}
+                <TextInput icon={'work'} placeholder={'title'} id={'title'} name={'title'}
                     minLength={3} maxLength={255} onChange={handleChange} value={formData.title} required />
-                <TextInput type='email' placeholder={'email'} id={'email'} name={'email'}
+                <TextInput icon={'mail'} type='email' placeholder={'email'} id={'email'} name={'email'}
                     onChange={handleChange} value={formData.email} required />
                 <DepartmentSelect placeholder={'department id'} id={'department_id'} name={'department_id'}
                     onChange={handleChange} currentValue={formData.department_id} onUnauth={onUnauth} />

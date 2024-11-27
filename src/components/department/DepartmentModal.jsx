@@ -69,7 +69,7 @@ function DepartmentModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) 
             <form onSubmit={onSubmit}>
                 <TextInput placeholder={'name'} id={'name'} name={'name'}
                     minLength={1} maxLength={255} onChange={handleChange} value={formData.name} required />
-                <TextInput placeholder={'capacity'} id={'capacity'} name={'capacity'}
+                <TextInput icon={'group'} placeholder={'capacity'} id={'capacity'} name={'capacity'}
                     type='number' onChange={handleChange} value={formData.capacity} required />
                 <span className='d-flex justify-content-center gap-2'>
                     <IconButton icon={'save'} title='save' type='submit' disabled={submitting} />

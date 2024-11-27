@@ -30,6 +30,7 @@ function DepartmentSelect({ currentValue, onChange, onUnauth, ...selectProps }) 
 
     return (
         <div className='dept-select'>
+            <span className='material-icons icon'>domain</span>
             <select value={currentValue} onChange={(e) => onChange(e)}
                 {...selectProps}>
                 <option key={'selDept'} value={null} hidden>department</option>
