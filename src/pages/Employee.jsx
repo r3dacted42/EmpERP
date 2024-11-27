@@ -7,6 +7,7 @@ import IconButton from '../components/general/IconButton';
 import EmployeeModel from '../models/EmployeeModel';
 import EmployeeModal from '../components/employee/EmployeeModal';
 import SalaryManager from '../components/salary/SalaryManager';
+import Footer from '../components/general/Footer';
 
 function Employee() {
     const navigate = useNavigate();
@@ -117,6 +118,8 @@ function Employee() {
                 <p>please login to continue</p>
                 <IconButton icon={'login'} title='login' onClick={() => { navigate("/login"); }} />
             </Modal>
+
+            <Footer />
         </div>
     )
 }

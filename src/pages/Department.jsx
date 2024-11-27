@@ -8,6 +8,7 @@ import DepartmentModal from '../components/department/DepartmentModal';
 import Modal from '../components/general/Modal';
 import IconButton from '../components/general/IconButton';
 import Navbar from '../components/general/Navbar';
+import Footer from '../components/general/Footer';
 
 function Department() {
     const navigate = useNavigate();
@@ -104,12 +105,14 @@ function Department() {
                                     <h4>employees</h4>
                                     <div className='emps-list row row-cols-1 row-cols-lg-2 row-gap-2'>
                                         {employees.map((e) =>
-                                        <div key={e.employee_id} className='col'>
-                                            <div className='emp-list-item'>
-                                                <img src={e.photo_url} alt={`${e.employee_id}'s photo`}></img>
-                                                <Link to={`/${e.employee_id}`}>{e.full_name} ({e.employee_id})</Link>
-                                            </div>                                            
-                                        </div>
+                                            <div key={e.employee_id} className='col'>
+                                                <div className='emp-list-item'>
+                                                    <img src={e.photo_url} onError={(e) => {
+                                                        e.target.src = `${process.env.PUBLIC_URL}/images/profile.png`;
+                                                    }} alt={`${e.employee_id}'s photo`}></img>
+                                                    <Link to={`/${e.employee_id}`}>{e.full_name} ({e.employee_id})</Link>
+                                                </div>
+                                            </div>
                                         )}
                                     </div>
                                 </>
@@ -143,6 +146,8 @@ function Department() {
                 <p>please login to continue</p>
                 <IconButton icon={'login'} title='login' onClick={() => { navigate("/login"); }} />
             </Modal>
+
+            <Footer />
         </div>
     )
 }

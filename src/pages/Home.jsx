@@ -7,6 +7,7 @@ import IconButton from '../components/general/IconButton';
 import EmployeeModel from '../models/EmployeeModel';
 import EmployeeCard from '../components/employee/EmployeeCard';
 import EmployeeModal from '../components/employee/EmployeeModal';
+import Footer from '../components/general/Footer';
 
 function Home() {
     const navigate = useNavigate();
@@ -43,7 +44,6 @@ function Home() {
         const newEmp = new EmployeeModel(data);
         if (updated) {
             const idx = employees.findIndex(e => e.employee_id === data.employee_id);
-            console.log(`updating index ${idx}`);
             let newEmps = employees;
             newEmps[idx] = newEmp;
             setEmployees(newEmps);
@@ -69,7 +69,7 @@ function Home() {
 
             <span className='d-flex flex-direction-row justify-content-end gap-3 mb-3'>
                 <IconButton icon={'person_add'} title='add employee' onClick={() => { setCurrentEmp(null); setEditModalVis(true); }} />
-                <IconButton icon={'delete'} title='delete all' />
+                {/* <IconButton icon={'delete'} title='delete all' /> */}
             </span>
 
             <div className='row row-cols-lg-2 row-cols-1 row-gap-3'>
@@ -100,6 +100,8 @@ function Home() {
                 <p>please login to continue</p>
                 <IconButton icon={'login'} title='login' onClick={() => { navigate("/login"); }} />
             </Modal>
+
+            <Footer />
         </div>
     )
 }

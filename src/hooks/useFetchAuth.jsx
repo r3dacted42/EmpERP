@@ -22,7 +22,7 @@ export default function useFetchAuth() {
         if (!(cookies.token && cookies.username) || expired) {
             removeCookies('username');
             removeCookies('token');
-            console.log("login needed");
+            // console.log("login needed");
             return new Promise((res) => { res(null); });
         }
         endpoint = apiOrigin + endpoint;

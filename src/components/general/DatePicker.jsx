@@ -13,14 +13,11 @@ function DatePicker({ onChange }) {
     }
 
     function calcDateMax() {
-        console.log("recalculating date max at month: " + month);
         let _dateMax = 31;
         if (month == 2) {
-            console.log('feb');
             _dateMax = isLeapYear() ? 29 : 28;
         } else if ((month <= 7 && month % 2 === 0)
             || (month >= 7 && month % 2 !== 0)) {
-            console.log('not feb');
             _dateMax = 30;
         }
         if (date > _dateMax) setDate(_dateMax);

@@ -7,6 +7,7 @@ import DepartmentCard from '../components/department/DepartmentCard';
 import Modal from '../components/general/Modal';
 import Navbar from '../components/general/Navbar';
 import IconButton from '../components/general/IconButton';
+import Footer from '../components/general/Footer';
 
 function AllDepartments() {
     const navigate = useNavigate();
@@ -48,7 +49,6 @@ function AllDepartments() {
         const newDept = new DepartmentModel(data);
         if (updated) {
             const idx = departments.findIndex(d => d.department_id === data.department_id);
-            console.log(`updating index ${idx}`);
             let newDepts = departments;
             newDepts[idx] = newDept;
             setDepartments(newDepts);
@@ -61,9 +61,7 @@ function AllDepartments() {
     async function onDelete(id) {
         let res = await fetchAuth(`/departments/${id}`, 'delete');
         if (res.status === 200) {
-            let newDepts = departments;
-            newDepts.splice(newDepts.findIndex(d => d.department_id === id), 1);
-            setDepartments(newDepts);
+            setDepartments((departments) => departments.filter((d) => d.department_id != id));
             setDeleteModalVis(false);
             setCurrentDept(null);
         }
@@ -76,7 +74,7 @@ function AllDepartments() {
 
             <span className='d-flex flex-direction-row justify-content-end gap-3 mb-3'>
                 <IconButton icon={'domain_add'} title='add department' onClick={() => { setCurrentDept(null); setEditModalVis(true); }} />
-                <IconButton icon={'delete'} title='delete all' />
+                {/* <IconButton icon={'delete'} title='delete all' /> */}
             </span>
 
             <div className='row row-cols-lg-2 row-cols-1 row-gap-3'>
@@ -106,6 +104,8 @@ function AllDepartments() {
                 <p>please login to continue</p>
                 <IconButton icon={'login'} title='login' onClick={() => { navigate("/login"); }} />
             </Modal>
+
+            <Footer />
         </div>
     )
 }
