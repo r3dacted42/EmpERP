@@ -1,14 +1,11 @@
 package org.r3dacted42.emperp.service;
 
 import lombok.RequiredArgsConstructor;
-import org.r3dacted42.emperp.controller.EmployeeController;
 import org.r3dacted42.emperp.dto.DepartmentRequest;
 import org.r3dacted42.emperp.dto.DepartmentResponse;
-import org.r3dacted42.emperp.dto.EmployeeResponse;
 import org.r3dacted42.emperp.entity.Department;
 import org.r3dacted42.emperp.entity.Employee;
 import org.r3dacted42.emperp.mapper.DepartmentMapper;
-import org.r3dacted42.emperp.mapper.EmployeeMapper;
 import org.r3dacted42.emperp.repository.DepartmentRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +18,7 @@ import java.util.Objects;
 public class DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final DepartmentMapper departmentMapper;
-    private final EmployeeController employeeController;
-    private final EmployeeMapper employeeMapper;
+    private final EmployeeService employeeService;
 
     public DepartmentResponse createDepartment(DepartmentRequest request) {
         Department department = departmentMapper.toEntity(request);
@@ -59,7 +55,7 @@ public class DepartmentService {
             Department department = Objects.requireNonNull(departmentRepository.findById(departmentId).orElse(null));
             List<Long> empIds = department.getEmployees().stream().map(Employee::getId).toList();
             for (Long empId : empIds) {
-                employeeController.deleteEmployee(empId);
+                employeeService.deleteEmployee(empId);
             }
         }
         departmentRepository.deleteById(departmentId);
