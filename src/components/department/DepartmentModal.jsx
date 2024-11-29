@@ -50,6 +50,7 @@ function DepartmentModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) 
             const newModel = await res.json();
             onSave(newModel, model != null);
             setServerMsg(null);
+            setFormData(emptyFormData);
             toggleVis();
         }
     }

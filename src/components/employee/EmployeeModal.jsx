@@ -81,6 +81,8 @@ function EmployeeModal({ id, model, isVisible, toggleVis, onSave, onUnauth }) {
         setSubmitting(false);
         if (success) {
             setServerMsg(null);
+            setFormData(emptyFormData);
+            setEmpidStatus(null);
             toggleVis();
         }
     }
