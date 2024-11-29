@@ -1,6 +1,8 @@
 # EmpERP Backend 
 ESD "Micro Mini" Project
 
+Frontend: [/tree/frontend](https://github.com/r3dacted42/EmpERP/tree/frontend)
+
 # Endpoints
 - User Account `/api/v1/auth` *[does not require token]*
     - `/username-available?username={username}` GET -> check whether given username is available
@@ -30,5 +32,5 @@ ESD "Micro Mini" Project
 
 # Instructions to run
 - open terminal in current folder and make sure MySQL is running
-- run the `create.sql`, `alter.sql`, and `insert.sql` scripts
 - run `.\mvnw spring-boot:run` (windows) or `./mvnw spring-boot:run` (linux)
+- [optional] run the ~~`create.sql`, `alter.sql`, and~~ `insert.sql` script

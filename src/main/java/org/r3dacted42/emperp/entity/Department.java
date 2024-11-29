@@ -23,6 +23,6 @@ public class Department {
     @Column(nullable = false)
     private Long capacity;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     List<Employee> employees;
 }
